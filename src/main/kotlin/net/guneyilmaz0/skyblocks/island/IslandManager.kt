@@ -8,6 +8,7 @@ import cn.nukkit.scheduler.AsyncTask
 import net.guneyilmaz0.skyblocks.Session
 import net.guneyilmaz0.skyblocks.SkyblockS
 import net.guneyilmaz0.skyblocks.objects.IslandData
+import net.guneyilmaz0.skyblocks.objects.Profile
 import net.guneyilmaz0.skyblocks.utils.Translator
 import net.guneyilmaz0.skyblocks.utils.Utils
 
@@ -60,6 +61,38 @@ object IslandManager {
         island.database.members += player.name
         island.save()
         player.sendMessage(Translator.translate(player, "joined_island", inviter.toString()))
+    }
+
+    fun deleteIsland(player: Player) {
+        val session = Session.get(player)
+        val island = session.getIsland()
+        if (island == null) {
+            player.sendMessage(Translator.translate(player, "no_island"))
+            return
+        }
+
+        if (!island.isOwner(player.name)) {
+            player.sendMessage(Translator.translate(player, "must_be_owner"))
+            return
+        }
+
+        for (member in island.getOnlineMembers()) {
+            val memberSession = Session.get(member)
+            memberSession.islandId = null
+            memberSession.profile.islandId = null
+            member.sendMessage(Translator.translate(member, "island_deleted"))
+            island.database.members -= member.name
+            member.teleport(Server.getInstance().defaultLevel.spawnLocation)
+        }
+
+        for (member in island.database.members) {
+            val profile = Profile.getProfile(member)
+            profile?.islandId = null
+        }
+        val id = island.id
+        island.delete()
+        Server.getInstance().unloadLevel(Server.getInstance().getLevelByName(id))
+        Utils.deleteLevel(id)
     }
 
 }
