@@ -5,6 +5,7 @@ import cn.nukkit.command.Command
 import cn.nukkit.command.CommandSender
 import cn.nukkit.form.window.FormWindowModal
 import net.guneyilmaz0.skyblocks.Session
+import net.guneyilmaz0.skyblocks.island.Island
 import net.guneyilmaz0.skyblocks.island.IslandManager
 
 class IslandCommand : Command(
@@ -66,21 +67,13 @@ class IslandCommand : Command(
     }
 
     private fun teleportIsland(player: Player) {
-        val session = Session.get(player)
-        val island = session.getIsland() ?: run {
-            player.sendMessage("§cYou don't have an island.")
-            return
-        }
+        val island = getIsland(player)?: return
 
         island.teleportPlayer(player)
     }
 
     private fun deleteIsland(player: Player) {
-        val session = Session.get(player)
-        val island = session.getIsland() ?: run {
-            player.sendMessage("§cYou don't have an island.")
-            return
-        }
+        val island = getIsland(player)?: return
 
         if (!island.isOwner(player.name)) {
             player.sendMessage("§cYou must be the owner of the island to use this command.")
@@ -97,11 +90,7 @@ class IslandCommand : Command(
     }
 
     private fun invitePlayer(player: Player, args: Array<String>) {
-        val session = Session.get(player)
-        val island = session.getIsland() ?: run {
-            player.sendMessage("§cYou don't have an island.")
-            return
-        }
+        val island = getIsland(player)?: return
 
         if (!island.isOwner(player.name)) {
             player.sendMessage("§cYou must be the owner of the island to use this command.")
@@ -127,11 +116,7 @@ class IslandCommand : Command(
     }
 
     private fun kickPlayerOnIsland(player: Player, args: Array<String>) {
-        val session = Session.get(player)
-        val island = session.getIsland() ?: run {
-            player.sendMessage("§cYou don't have an island.")
-            return
-        }
+        val island = getIsland(player)?: return
 
         if (args.size < 2) {
             player.sendMessage("§cUsage: /island kick <player>")
@@ -143,8 +128,8 @@ class IslandCommand : Command(
             return
         }
 
-        if (island.isMember(target.name)) {
-            player.sendMessage("§cYou can't kick the member of the island.")
+        if (!island.isMember(target.name)) {
+            player.sendMessage("§cPlayer is not a member of your island.")
             return
         }
 
@@ -155,7 +140,7 @@ class IslandCommand : Command(
 
         target.teleport(player.server.defaultLevel.spawnLocation)
         target.sendMessage("§cYou have been kicked off the island.")
-        player.sendMessage(target.name + "§chas been kicked off the island.")
+        player.sendMessage("${target.name} §chas been kicked off the island.")
     }
 
     private fun leaveIsland(player: Player) {
@@ -178,12 +163,16 @@ class IslandCommand : Command(
     }
 
     private fun setSpawn(player: Player) {
+        val island = getIsland(player)?: return
+        island.setSpawn(player)
+    }
+
+    private fun getIsland(player: Player) : Island? {
         val session = Session.get(player)
         val island = session.getIsland() ?: run {
             player.sendMessage("§cYou don't have an island.")
-            return
+            return null
         }
-
-        island.setSpawn(player)
+        return island
     }
 }
