@@ -145,10 +145,7 @@ class IslandCommand : Command(
 
     private fun leaveIsland(player: Player) {
         val session = Session.get(player)
-        val island = session.getIsland() ?: run {
-            player.sendMessage("§cYou don't have an island.")
-            return
-        }
+        val island = getIsland(player)?: return
 
         if (island.isOwner(player.name)) {
             player.sendMessage("§cYou can't leave your own island.")
