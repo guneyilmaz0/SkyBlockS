@@ -5,10 +5,15 @@ import cn.nukkit.plugin.PluginBase
 import net.guneyilmaz0.skyblocks.commands.IslandCommand
 import net.guneyilmaz0.skyblocks.island.IslandGenerator
 import net.guneyilmaz0.skyblocks.listeners.*
+import net.guneyilmaz0.skyblocks.tasks.AutoSaveTask
 
 class SkyblockS : PluginBase() {
     companion object {
         lateinit var instance: SkyblockS
+    }
+
+    override fun onLoad() {
+        saveResource("lang/en.yml")
     }
 
     override fun onEnable() {
@@ -20,6 +25,8 @@ class SkyblockS : PluginBase() {
         server.pluginManager.registerEvents(ProtectionListener(), this)
         //Register commands
         server.commandMap.register("island", IslandCommand())
+        //Register tasks
+        server.scheduler.scheduleRepeatingTask(this, AutoSaveTask(), 20 * 60)
     }
 
 }
