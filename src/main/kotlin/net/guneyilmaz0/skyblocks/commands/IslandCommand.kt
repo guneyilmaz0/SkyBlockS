@@ -128,8 +128,8 @@ class IslandCommand : Command(
             return
         }
 
-        if (!island.isMember(target.name)) {
-            player.sendMessage("§cPlayer is not a member of your island.")
+        if (island.isMember(target.name)) {
+            player.sendMessage("§You can't kick the member of the island.")
             return
         }
 
