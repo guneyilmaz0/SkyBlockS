@@ -7,6 +7,7 @@ import cn.nukkit.form.window.FormWindowModal
 import net.guneyilmaz0.skyblocks.Session
 import net.guneyilmaz0.skyblocks.island.Island
 import net.guneyilmaz0.skyblocks.island.IslandManager
+import net.guneyilmaz0.skyblocks.utils.Translator
 
 class IslandCommand : Command(
     "island",
@@ -32,7 +33,10 @@ class IslandCommand : Command(
 
         when (args[0].lowercase()) {
             "create" -> createIsland(sender, args)
-            "tp", "teleport" -> teleportIsland(sender)
+            "tp", "teleport" -> {
+                val island = getIsland(sender)?: return false
+                island.teleportPlayer(sender)
+            }
             "delete" -> deleteIsland(sender)
             "invite" -> invitePlayer(sender, args)
             "kick" -> kickPlayerOnIsland(sender, args)
@@ -50,7 +54,7 @@ class IslandCommand : Command(
     private fun createIsland(player: Player, args: Array<String>) {
         val session = Session.get(player)
         if (session.getIsland() != null) {
-            player.sendMessage("§cYou already have an island.")
+            player.sendMessage(Translator.translate(player, "already_have_island"))
             return
         }
 
@@ -62,32 +66,26 @@ class IslandCommand : Command(
 
         val type = args[1].lowercase()
         if (type !in arrayOf("normal", "snow", "desert", "end")) {
-            player.sendMessage("§cInvalid island type.")
+            player.sendMessage(Translator.translate(player, "invalid_island_type"))
             return
         }
 
         IslandManager.createIsland(player, type)
     }
 
-    private fun teleportIsland(player: Player) {
-        val island = getIsland(player)?: return
-
-        island.teleportPlayer(player)
-    }
-
     private fun deleteIsland(player: Player) {
         val island = getIsland(player)?: return
 
         if (!island.isOwner(player.name)) {
-            player.sendMessage("§cYou must be the owner of the island to use this command.")
+            player.sendMessage(Translator.translate(player, "must_be_owner"))
             return
         }
 
         val form = FormWindowModal(
-            "Delete Island",
-            "Are you sure you want to delete your island? §c§lThis action cannot be undone.",
-            "Yes",
-            "No"
+            Translator.translate(player, "form_delete_island_title"),
+            Translator.translate(player, "form_delete_island_content"),
+            Translator.translate(player, "form_delete_island_true"),
+            Translator.translate(player, "form_delete_island_false")
         )
         player.showFormWindow(form, "delete_island".hashCode())
     }
@@ -96,7 +94,7 @@ class IslandCommand : Command(
         val island = getIsland(player)?: return
 
         if (!island.isOwner(player.name)) {
-            player.sendMessage("§cYou must be the owner of the island to use this command.")
+            player.sendMessage(Translator.translate(player, "must_be_owner"))
             return
         }
 
@@ -106,12 +104,12 @@ class IslandCommand : Command(
         }
 
         val target = player.server.getPlayer(args[1]) ?: run {
-            player.sendMessage("§cPlayer not found.")
+            player.sendMessage(Translator.translate(player, "player_not_found"))
             return
         }
 
         if (island.isMember(target.name)) {
-            player.sendMessage("§f${target.name} §cis already a member of the island.")
+            player.sendMessage(Translator.translate(player, "player_already_member", target.name))
             return
         }
 
@@ -127,23 +125,23 @@ class IslandCommand : Command(
         }
 
         val target = player.server.getPlayer(args[1]) ?: run {
-            player.sendMessage("§cPlayer not found.")
+            player.sendMessage(Translator.translate(player, "player_not_found"))
             return
         }
 
         if (island.isMember(target.name)) {
-            player.sendMessage("§cYou can't kick the member of the island.")
+            player.sendMessage(Translator.translate(player, "cannot_kick_member"))
             return
         }
 
         if (!target.getLevel().folderName.equals(island.id)) {
-            player.sendMessage("§cPlayer is not on your island.")
+            player.sendMessage(Translator.translate(player, "player_not_on_island"))
             return
         }
 
         target.teleport(player.server.defaultLevel.spawnLocation)
-        target.sendMessage("§cYou have been kicked off the island.")
-        player.sendMessage("${target.name} §chas been kicked off the island.")
+        target.sendMessage(Translator.translate(target, "kicked_from_island"))
+        player.sendMessage(Translator.translate(player, "player_kicked", target.name))
     }
 
     private fun leaveIsland(player: Player) {
@@ -151,21 +149,21 @@ class IslandCommand : Command(
         val island = getIsland(player)?: return
 
         if (island.isOwner(player.name)) {
-            player.sendMessage("§cYou can't leave your own island.")
+            player.sendMessage(Translator.translate(player, "island_owner_leave"))
             return
         }
 
         island.database.members -= player.name
         session.islandId = null
         session.profile.islandId = null
-        player.sendMessage("§cYou left the island.")
+        player.sendMessage(Translator.translate(player, "island_left"))
         player.teleport(player.server.defaultLevel.spawnLocation)
     }
 
     private fun getIsland(player: Player) : Island? {
         val session = Session.get(player)
         val island = session.getIsland() ?: run {
-            player.sendMessage("§cYou don't have an island.")
+            player.sendMessage(Translator.translate(player, "island_not_found"))
             return null
         }
         return island

@@ -8,6 +8,7 @@ import cn.nukkit.scheduler.AsyncTask
 import net.guneyilmaz0.skyblocks.Session
 import net.guneyilmaz0.skyblocks.SkyblockS
 import net.guneyilmaz0.skyblocks.objects.IslandData
+import net.guneyilmaz0.skyblocks.utils.Translator
 import net.guneyilmaz0.skyblocks.utils.Utils
 
 object IslandManager {
@@ -34,31 +35,31 @@ object IslandManager {
         session.islandId = id
         session.profile.islandId = id
         player.teleport(Vector3(7.0, 66.0, 7.0))
-        player.sendMessage("§aYour island has been created successfully!")
+        player.sendMessage(Translator.translate(player, "island_created"))
         level.addSound(player, Sound.RANDOM_LEVELUP, 1f, 1f, player)
     }
 
     fun inviteMember(player: Player, target: Player) {
         memberRequests[target.name] = player.name
-        player.sendMessage("§a${target.name} has been invited to the island.")
-        target.sendMessage("§aYou have been invited to join §b${player.name}§a's island.")
+        player.sendMessage(Translator.translate(player, "invite_sent", target.name))
+        target.sendMessage(Translator.translate(target, "invite_received", player.name))
     }
 
     fun acceptInvite(player: Player) {
         val inviter = memberRequests.remove(player.name) ?: {
-            player.sendMessage("§cYou don't have any pending invites.")
+            player.sendMessage(Translator.translate(player, "no_invites"))
         }
 
         val session = Session.get(player)
         if (session.getIsland() != null) {
-            player.sendMessage("§cYou already have an island.")
+            player.sendMessage(Translator.translate(player, "already_have_island"))
             return
         }
 
         val island = session.getIsland() ?: return
         island.database.members += player.name
         island.save()
-        player.sendMessage("§aYou have joined §b$inviter§a's island.")
+        player.sendMessage(Translator.translate(player, "joined_island", inviter.toString()))
     }
 
 }

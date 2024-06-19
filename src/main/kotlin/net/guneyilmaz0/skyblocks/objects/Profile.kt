@@ -9,6 +9,7 @@ data class Profile(
     val uuid: UUID,
     var nickName: String,
     var islandId: String?,
+    var selectedLang: String = "en"
 ) {
     companion object {
         fun getProfile(name: String): Profile? {
