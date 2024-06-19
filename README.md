@@ -6,3 +6,6 @@ TODO
 - [x] Add multilanguage system
 - [ ] Add remaining islands types
 - [ ] Add member remove
+- [ ] Add chest contents
+- [ ] Lock/Unlock island
+- [ ] Add visit island
