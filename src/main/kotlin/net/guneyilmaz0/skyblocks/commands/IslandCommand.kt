@@ -39,13 +39,22 @@ class IslandCommand : Command(
             }
             "delete" -> deleteIsland(sender)
             "invite" -> invitePlayer(sender, args)
+            "accept" -> IslandManager.acceptInvite(sender)
             "kick" -> kickPlayerOnIsland(sender, args)
             "leave" -> leaveIsland(sender)
             "spawn", "setspawn" -> {
                 val island = getIsland(sender)?: return false
                 island.setSpawn(sender)
             }
-            "accept" -> IslandManager.acceptInvite(sender)
+            "help" -> {
+                sender.sendMessage("/island create <type> - §eCreate an island")
+                sender.sendMessage("/island delete - §eDelete your island")
+                sender.sendMessage("/island invite <player> - §eInvite a player to your island")
+                sender.sendMessage("/island accept - §eAccept an island invite")
+                sender.sendMessage("/island kick <player> - §eKick a player from your island")
+                sender.sendMessage("/island leave - §eLeave your island")
+                sender.sendMessage("/island spawn - §eSet your island spawn point")
+            }
             else -> sender.sendMessage(usage)
         }
         return true
