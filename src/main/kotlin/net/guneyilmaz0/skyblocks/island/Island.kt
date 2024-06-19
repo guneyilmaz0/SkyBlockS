@@ -2,7 +2,6 @@ package net.guneyilmaz0.skyblocks.island
 
 import cn.nukkit.Player
 import cn.nukkit.Server
-import net.guneyilmaz0.skyblocks.Session
 import net.guneyilmaz0.skyblocks.objects.IslandData
 import java.util.*
 
@@ -54,5 +53,4 @@ data class Island(val id: String) {
         data.remove(id)
         IslandData.removeIsland(id)
     }
-
 }

@@ -37,7 +37,10 @@ class IslandCommand : Command(
             "invite" -> invitePlayer(sender, args)
             "kick" -> kickPlayerOnIsland(sender, args)
             "leave" -> leaveIsland(sender)
-            "spawn", "setspawn" -> setSpawn(sender)
+            "spawn", "setspawn" -> {
+                val island = getIsland(sender)?: return false
+                island.setSpawn(sender)
+            }
             "accept" -> IslandManager.acceptInvite(sender)
             else -> sender.sendMessage(usage)
         }
@@ -157,11 +160,6 @@ class IslandCommand : Command(
         session.profile.islandId = null
         player.sendMessage("§cYou left the island.")
         player.teleport(player.server.defaultLevel.spawnLocation)
-    }
-
-    private fun setSpawn(player: Player) {
-        val island = getIsland(player)?: return
-        island.setSpawn(player)
     }
 
     private fun getIsland(player: Player) : Island? {
