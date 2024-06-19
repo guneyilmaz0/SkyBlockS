@@ -43,36 +43,6 @@ data class Island(val id: String) {
         player.sendMessage("§aIsland spawn location updated.")
     }
 
-    fun kickPlayer(player: Player, target: Player) {
-        if (isMember(target.name)) {
-            player.sendMessage("§cYou can't kick a member off their own island.")
-            return
-        }
-
-        if (target.level.folderName != id) {
-            player.sendMessage("§cPlayer has already left the island.")
-            return
-        }
-
-        player.sendMessage("§a${target.name} §ckicked off the island.")
-        target.sendMessage("§c${player.name} §ckicked you off their island.")
-        target.teleport(Server.getInstance().defaultLevel.spawnLocation)
-    }
-
-    fun leaveIsland(player: Player) {
-        if (isOwner(player.name)) {
-            player.sendMessage("§cYou can't leave your own island.")
-            return
-        }
-
-        database.members -= player.name
-        val session = Session.get(player)
-        session.islandId = null
-        session.profile.islandId = null
-        player.sendMessage("§cYou left the island.")
-        player.teleport(Server.getInstance().defaultLevel.spawnLocation)
-    }
-
     fun close() {
         save()
         data.remove(id)
