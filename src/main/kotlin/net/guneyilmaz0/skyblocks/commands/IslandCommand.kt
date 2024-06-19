@@ -129,7 +129,7 @@ class IslandCommand : Command(
         }
 
         if (island.isMember(target.name)) {
-            player.sendMessage("§You can't kick the member of the island.")
+            player.sendMessage("§cYou can't kick the member of the island.")
             return
         }
 
