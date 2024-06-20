@@ -7,5 +7,5 @@ TODO
 - [ ] Add remaining islands types
 - [ ] Add member remove
 - [ ] Add chest contents
-- [ ] Lock/Unlock island
-- [ ] Add visit island
+- [x] Lock/Unlock island
+- [x] Add visit island
