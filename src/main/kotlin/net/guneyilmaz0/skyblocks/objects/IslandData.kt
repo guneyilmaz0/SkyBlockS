@@ -10,7 +10,8 @@ data class IslandData(
     val id: String,
     var owner: String,
     var type: String,
-    var members: List<String>
+    var members: List<String>,
+    var lock: Boolean = false
 ) {
     companion object {
         fun createDefault(player: Player, id: String, type: String): IslandData =

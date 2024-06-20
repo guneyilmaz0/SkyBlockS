@@ -46,6 +46,17 @@ class IslandCommand : Command(
                 val island = getIsland(sender)?: return false
                 island.setSpawn(sender)
             }
+            "lock" -> {
+                val island = getIsland(sender)?: return false
+                island.database.lock = true
+                sender.sendMessage(Translator.translate(sender, "island_locked"))
+            }
+            "unlock" -> {
+                val island = getIsland(sender)?: return false
+                island.database.lock = false
+                sender.sendMessage(Translator.translate(sender, "island_unlocked"))
+            }
+            "visit" -> visitIsland(sender, args)
             "help" -> {
                 sender.sendMessage("/island create <type> - §eCreate an island")
                 sender.sendMessage("/island delete - §eDelete your island")
@@ -54,6 +65,9 @@ class IslandCommand : Command(
                 sender.sendMessage("/island kick <player> - §eKick a player from your island")
                 sender.sendMessage("/island leave - §eLeave your island")
                 sender.sendMessage("/island spawn - §eSet your island spawn point")
+                sender.sendMessage("/island lock - §eLock your island")
+                sender.sendMessage("/island unlock - §eUnlock your island")
+
             }
             else -> sender.sendMessage(usage)
         }
@@ -176,5 +190,30 @@ class IslandCommand : Command(
             return null
         }
         return island
+    }
+
+    private fun visitIsland(player: Player, args: Array<String>) {
+        if (args.size < 2) {
+            player.sendMessage("§cUsage: /island visit <player>")
+            return
+        }
+
+        val target = player.server.getPlayer(args[1]) ?: run {
+            player.sendMessage(Translator.translate(player, "player_not_found"))
+            return
+        }
+
+        val island = Session.get(target).getIsland() ?: run {
+            player.sendMessage(Translator.translate(player, "player_has_no_island", target.name))
+            return
+        }
+
+        if (!island.isMember(player.name) && island.database.lock){
+            player.sendMessage(Translator.translate(player, "island_locked_target"))
+            return
+        }
+
+        island.teleportPlayer(player)
+        player.sendMessage(Translator.translate(player, "teleported_to_island", target.name))
     }
 }
