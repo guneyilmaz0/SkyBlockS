@@ -1,11 +1,13 @@
 package net.guneyilmaz0.skyblocks.island
 
 import cn.nukkit.block.Block
+import cn.nukkit.blockentity.BlockEntityChest
 import cn.nukkit.level.ChunkManager
 import cn.nukkit.level.generator.Generator
 import cn.nukkit.level.generator.`object`.tree.ObjectTree
 import cn.nukkit.math.NukkitRandom
 import cn.nukkit.math.Vector3
+import cn.nukkit.nbt.tag.CompoundTag
 
 class IslandGenerator(private val options: MutableMap<String, Any>) : Generator() {
 
@@ -40,14 +42,15 @@ class IslandGenerator(private val options: MutableMap<String, Any>) : Generator(
 
             ObjectTree.growTree(level, 10, 64, 7, random, 0)
             chunk.setBlock(9, 64, 7, Block.CHEST)
+            BlockEntityChest.createBlockEntity(BlockEntityChest.CHEST, chunk, CompoundTag()) as BlockEntityChest
         }
     }
 
-    override fun populateChunk(p0: Int, p1: Int) { }
+    override fun populateChunk(x: Int, z: Int) { }
 
     override fun getSettings(): MutableMap<String, Any> = options
 
-    override fun getName(): String = "net/guneyilmaz0/skyblocks/island"
+    override fun getName(): String = "island"
 
     override fun getSpawn(): Vector3 = Vector3(7.0, 66.0, 7.0)
 

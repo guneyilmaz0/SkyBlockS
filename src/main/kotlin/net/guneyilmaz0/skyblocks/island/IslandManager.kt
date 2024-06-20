@@ -44,6 +44,7 @@ object IslandManager {
         memberRequests[target.name] = player.name
         player.sendMessage(Translator.translate(player, "invite_sent", target.name))
         target.sendMessage(Translator.translate(target, "invite_received", player.name))
+        target.getLevel().addSound(target, Sound.RANDOM_ORB, 1f, 1f, target)
     }
 
     fun acceptInvite(player: Player) {
@@ -94,5 +95,4 @@ object IslandManager {
         Server.getInstance().unloadLevel(Server.getInstance().getLevelByName(id))
         Utils.deleteLevel(id)
     }
-
 }
