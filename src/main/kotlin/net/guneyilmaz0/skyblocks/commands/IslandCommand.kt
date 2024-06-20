@@ -7,6 +7,7 @@ import cn.nukkit.form.window.FormWindowModal
 import net.guneyilmaz0.skyblocks.Session
 import net.guneyilmaz0.skyblocks.island.Island
 import net.guneyilmaz0.skyblocks.island.IslandManager
+import net.guneyilmaz0.skyblocks.objects.Profile
 import net.guneyilmaz0.skyblocks.utils.Translator
 
 class IslandCommand : Command(
@@ -34,28 +35,33 @@ class IslandCommand : Command(
         when (args[0].lowercase()) {
             "create" -> createIsland(sender, args)
             "tp", "teleport" -> {
-                val island = getIsland(sender)?: return false
+                val island = getIsland(sender) ?: return false
                 island.teleportPlayer(sender)
             }
+
             "delete" -> deleteIsland(sender)
             "invite" -> invitePlayer(sender, args)
+            "remove" -> removeMember(sender, args)
             "accept" -> IslandManager.acceptInvite(sender)
             "kick" -> kickPlayerOnIsland(sender, args)
             "leave" -> leaveIsland(sender)
             "spawn", "setspawn" -> {
-                val island = getIsland(sender)?: return false
+                val island = getIsland(sender) ?: return false
                 island.setSpawn(sender)
             }
+
             "lock" -> {
-                val island = getIsland(sender)?: return false
+                val island = getIsland(sender) ?: return false
                 island.database.lock = true
                 sender.sendMessage(Translator.translate(sender, "island_locked"))
             }
+
             "unlock" -> {
-                val island = getIsland(sender)?: return false
+                val island = getIsland(sender) ?: return false
                 island.database.lock = false
                 sender.sendMessage(Translator.translate(sender, "island_unlocked"))
             }
+
             "visit" -> visitIsland(sender, args)
             "help" -> {
                 sender.sendMessage("/island create <type> - §eCreate an island")
@@ -69,6 +75,7 @@ class IslandCommand : Command(
                 sender.sendMessage("/island unlock - §eUnlock your island")
 
             }
+
             else -> sender.sendMessage(usage)
         }
         return true
@@ -97,7 +104,7 @@ class IslandCommand : Command(
     }
 
     private fun deleteIsland(player: Player) {
-        val island = getIsland(player)?: return
+        val island = getIsland(player) ?: return
 
         if (!island.isOwner(player.name)) {
             player.sendMessage(Translator.translate(player, "must_be_owner"))
@@ -114,7 +121,7 @@ class IslandCommand : Command(
     }
 
     private fun invitePlayer(player: Player, args: Array<String>) {
-        val island = getIsland(player)?: return
+        val island = getIsland(player) ?: return
 
         if (!island.isOwner(player.name)) {
             player.sendMessage(Translator.translate(player, "must_be_owner"))
@@ -139,8 +146,47 @@ class IslandCommand : Command(
         IslandManager.inviteMember(player, target)
     }
 
+    private fun removeMember(player: Player, args: Array<String>) {
+        val island = getIsland(player) ?: return
+
+        if (!island.isOwner(player.name)) {
+            player.sendMessage(Translator.translate(player, "must_be_owner"))
+            return
+        }
+
+        if (args.size < 2) {
+            player.sendMessage("§cUsage: /island remove <player>")
+            return
+        }
+
+        if (!island.database.members.contains(args[1])) {
+            player.sendMessage(Translator.translate(player, "player_not_member", args[1]))
+            return
+        }
+
+        if (island.isOwner(args[1])) {
+            player.sendMessage(Translator.translate(player, "cannot_remove_owner"))
+            return
+        }
+
+        val target = player.server.getPlayer(args[1])
+        if (target == null) {
+            val profile = Profile.getProfile(args[1])
+            profile!!.islandId = null
+            profile.save()
+        } else {
+            val targetSession = Session.get(target)
+            targetSession.islandId = null
+            targetSession.profile.islandId = null
+            target.sendMessage(Translator.translate(target, "removed_from_island"))
+        }
+
+        island.database.members -= target.name
+        player.sendMessage(Translator.translate(player, "player_removed", target.name))
+    }
+
     private fun kickPlayerOnIsland(player: Player, args: Array<String>) {
-        val island = getIsland(player)?: return
+        val island = getIsland(player) ?: return
 
         if (args.size < 2) {
             player.sendMessage("§cUsage: /island kick <player>")
@@ -169,7 +215,7 @@ class IslandCommand : Command(
 
     private fun leaveIsland(player: Player) {
         val session = Session.get(player)
-        val island = getIsland(player)?: return
+        val island = getIsland(player) ?: return
 
         if (island.isOwner(player.name)) {
             player.sendMessage(Translator.translate(player, "island_owner_leave"))
@@ -183,7 +229,7 @@ class IslandCommand : Command(
         player.teleport(player.server.defaultLevel.spawnLocation)
     }
 
-    private fun getIsland(player: Player) : Island? {
+    private fun getIsland(player: Player): Island? {
         val session = Session.get(player)
         val island = session.getIsland() ?: run {
             player.sendMessage(Translator.translate(player, "island_not_found"))
@@ -208,7 +254,7 @@ class IslandCommand : Command(
             return
         }
 
-        if (!island.isMember(player.name) && island.database.lock){
+        if (!island.isMember(player.name) && island.database.lock) {
             player.sendMessage(Translator.translate(player, "island_locked_target"))
             return
         }

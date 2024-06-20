@@ -33,7 +33,7 @@ data class Session(val player: Player) {
     fun getIsland(): Island? = islandId?.let { Island.get(it) }
 
     fun save() {
-        Profile.saveProfile(profile)
+        profile.save()
         if (islandId != null) getIsland()!!.save()
     }
 

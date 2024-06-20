@@ -25,11 +25,12 @@ data class Profile(
         fun isProfileExists(name: String): Boolean =
             Config("${SkyblockS.instance.dataFolder.path}/profiles.json", 1).exists(name.lowercase())
 
-        fun saveProfile(profile: Profile) {
-            val configFilePath = "${SkyblockS.instance.dataFolder.path}/profiles.json"
-            val config = Config(configFilePath, 1)
-            config.set(profile.nickName.lowercase(), profile)
-            config.save()
-        }
+    }
+
+    fun save() {
+        val configFilePath = "${SkyblockS.instance.dataFolder.path}/profiles.json"
+        val config = Config(configFilePath, 1)
+        config.set(nickName.lowercase(), this)
+        config.save()
     }
 }
