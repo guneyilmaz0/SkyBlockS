@@ -29,4 +29,7 @@ class SkyblockS : PluginBase() {
         server.scheduler.scheduleRepeatingTask(this, AutoSaveTask(), 20 * 60)
     }
 
+    override fun onDisable() {
+        for (player in server.onlinePlayers.values) Session.get(player).close()
+    }
 }
