@@ -14,6 +14,7 @@ class SkyblockS : PluginBase() {
 
     override fun onLoad() {
         saveResource("lang/en.yml")
+        saveResource("lang/tr.yml")
     }
 
     override fun onEnable() {

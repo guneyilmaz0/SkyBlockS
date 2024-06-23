@@ -63,6 +63,7 @@ class IslandCommand : Command(
             }
 
             "visit" -> visitIsland(sender, args)
+            "language" -> setLanguage(sender, args)
             "help" -> {
                 sender.sendMessage("/island create <type> - §eCreate an island")
                 sender.sendMessage("/island delete - §eDelete your island")
@@ -73,7 +74,8 @@ class IslandCommand : Command(
                 sender.sendMessage("/island spawn - §eSet your island spawn point")
                 sender.sendMessage("/island lock - §eLock your island")
                 sender.sendMessage("/island unlock - §eUnlock your island")
-
+                sender.sendMessage("/island visit <player> - §eVisit a player's island")
+                sender.sendMessage("/island language <lang> - §eChange your language")
             }
 
             else -> sender.sendMessage(usage)
@@ -261,5 +263,24 @@ class IslandCommand : Command(
 
         island.teleportPlayer(player)
         player.sendMessage(Translator.translate(player, "teleported_to_island", target.name))
+    }
+
+    private fun setLanguage(player: Player, args: Array<String>) {
+        if (args.size < 2) {
+            player.sendMessage("§cUsage: /island language <lang>")
+            return
+        }
+
+        val lang = args[1].lowercase()
+        if (!Translator.isLanguageSupported(lang)) {
+            player.sendMessage(Translator.translate(player, "language_not_supported",
+                Translator.getSupportedLanguages().toString()
+            ))
+            return
+        }
+
+        val profile = Session.get(player).profile
+        profile.selectedLang = lang
+        player.sendMessage(Translator.translate(player, "language_changed", lang))
     }
 }

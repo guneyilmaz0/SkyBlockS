@@ -9,4 +9,5 @@ TODO
 - [ ] Add chest contents
 - [x] Lock/Unlock island
 - [x] Add visit island
-- [ ] Select language
+- [x] Select language
+- [ ] Add more languages

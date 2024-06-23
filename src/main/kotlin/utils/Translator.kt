@@ -4,6 +4,7 @@ import cn.nukkit.Player
 import cn.nukkit.utils.Config
 import net.guneyilmaz0.skyblocks.Session
 import net.guneyilmaz0.skyblocks.SkyblockS
+import java.io.File
 
 object Translator {
     fun translate(player: Player, string: String): String {
@@ -20,4 +21,10 @@ object Translator {
             acc.replace("%var$index%", value)
         }
     }
+
+    fun isLanguageSupported(lang: String): Boolean =
+        File("${SkyblockS.instance.dataFolder.path}/lang/$lang.yml").exists()
+
+    fun getSupportedLanguages(): List<String> =
+        File("${SkyblockS.instance.dataFolder.path}/lang").listFiles()!!.map { it.nameWithoutExtension }
 }
