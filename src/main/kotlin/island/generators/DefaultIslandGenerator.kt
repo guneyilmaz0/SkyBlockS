@@ -1,4 +1,4 @@
-package net.guneyilmaz0.skyblocks.island
+package net.guneyilmaz0.skyblocks.island.generators
 
 import cn.nukkit.block.Block
 import cn.nukkit.blockentity.BlockEntityChest
@@ -9,7 +9,7 @@ import cn.nukkit.math.NukkitRandom
 import cn.nukkit.math.Vector3
 import cn.nukkit.nbt.tag.CompoundTag
 
-class IslandGenerator(private val options: MutableMap<String, Any>) : Generator() {
+class DefaultIslandGenerator(private val options: MutableMap<String, Any>) : Generator() {
 
     override fun getId(): Int = 4
 
@@ -50,7 +50,7 @@ class IslandGenerator(private val options: MutableMap<String, Any>) : Generator(
 
     override fun getSettings(): MutableMap<String, Any> = options
 
-    override fun getName(): String = "island"
+    override fun getName(): String = "default_island"
 
     override fun getSpawn(): Vector3 = Vector3(7.0, 66.0, 7.0)
 

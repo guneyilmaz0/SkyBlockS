@@ -5,8 +5,10 @@ import cn.nukkit.Server
 import cn.nukkit.level.Sound
 import cn.nukkit.math.Vector3
 import cn.nukkit.scheduler.AsyncTask
+import island.generators.DesertIslandGenerator
 import net.guneyilmaz0.skyblocks.Session
 import net.guneyilmaz0.skyblocks.SkyBlockS
+import net.guneyilmaz0.skyblocks.island.generators.DefaultIslandGenerator
 import net.guneyilmaz0.skyblocks.objects.IslandData
 import net.guneyilmaz0.skyblocks.objects.Profile
 import net.guneyilmaz0.skyblocks.utils.Translator
@@ -21,9 +23,14 @@ object IslandManager {
         val data = IslandData.createDefault(player, id, type)
         IslandData.saveIsland(data)
 
+        val generator = when (type) {
+            "desert" -> DesertIslandGenerator::class.java
+            else -> DefaultIslandGenerator::class.java
+        }
+
         Server.getInstance().scheduler.scheduleAsyncTask(SkyBlockS.instance, object : AsyncTask() {
             override fun onRun() {
-                Server.getInstance().generateLevel(id, 0, IslandGenerator::class.java)
+                Server.getInstance().generateLevel(id, 0, generator)
                 completeCreateIsland(player, id)
             }
         })
