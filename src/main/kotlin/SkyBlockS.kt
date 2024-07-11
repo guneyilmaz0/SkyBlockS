@@ -3,7 +3,6 @@ package net.guneyilmaz0.skyblocks
 import cn.nukkit.level.generator.Generator
 import cn.nukkit.plugin.PluginBase
 import net.guneyilmaz0.skyblocks.commands.IslandCommand
-import island.generators.DesertIslandGenerator
 import net.guneyilmaz0.skyblocks.island.generators.*
 import net.guneyilmaz0.skyblocks.listeners.*
 import net.guneyilmaz0.skyblocks.tasks.AutoSaveTask

@@ -5,10 +5,9 @@ import cn.nukkit.Server
 import cn.nukkit.level.Sound
 import cn.nukkit.math.Vector3
 import cn.nukkit.scheduler.AsyncTask
-import island.generators.DesertIslandGenerator
 import net.guneyilmaz0.skyblocks.Session
 import net.guneyilmaz0.skyblocks.SkyBlockS
-import net.guneyilmaz0.skyblocks.island.generators.DefaultIslandGenerator
+import net.guneyilmaz0.skyblocks.island.generators.*
 import net.guneyilmaz0.skyblocks.objects.IslandData
 import net.guneyilmaz0.skyblocks.objects.Profile
 import net.guneyilmaz0.skyblocks.utils.Translator
