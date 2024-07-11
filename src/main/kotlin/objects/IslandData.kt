@@ -3,7 +3,7 @@ package net.guneyilmaz0.skyblocks.objects
 import cn.nukkit.Player
 import cn.nukkit.utils.Config
 import com.google.gson.Gson
-import net.guneyilmaz0.skyblocks.SkyblockS
+import net.guneyilmaz0.skyblocks.SkyBlockS
 import kotlin.collections.ArrayList
 
 data class IslandData(
@@ -18,7 +18,7 @@ data class IslandData(
             IslandData(id, player.name, type, ArrayList())
 
         fun getIslandData(name: String): IslandData? {
-            val configFilePath = "${SkyblockS.instance.dataFolder.path}/islands.json"
+            val configFilePath = "${SkyBlockS.instance.dataFolder.path}/islands.json"
             val config = Config(configFilePath, 1)
 
             val lowerCaseName = name.lowercase()
@@ -28,17 +28,17 @@ data class IslandData(
         }
 
         fun isIslandExists(id: String): Boolean =
-            Config("${SkyblockS.instance.dataFolder.path}/islands.json", 1).exists(id)
+            Config("${SkyBlockS.instance.dataFolder.path}/islands.json", 1).exists(id)
 
         fun saveIsland(island: IslandData) {
-            val configFilePath = "${SkyblockS.instance.dataFolder.path}/islands.json"
+            val configFilePath = "${SkyBlockS.instance.dataFolder.path}/islands.json"
             val config = Config(configFilePath, 1)
             config.set(island.id, island)
             config.save()
         }
 
         fun removeIsland(id: String) {
-            val configFilePath = "${SkyblockS.instance.dataFolder.path}/islands.json"
+            val configFilePath = "${SkyBlockS.instance.dataFolder.path}/islands.json"
             val config = Config(configFilePath, 1)
             config.remove(id)
             config.save()

@@ -9,7 +9,7 @@ import cn.nukkit.event.player.PlayerQuitEvent
 import cn.nukkit.form.window.FormWindowModal
 import cn.nukkit.scheduler.NukkitRunnable
 import net.guneyilmaz0.skyblocks.Session
-import net.guneyilmaz0.skyblocks.SkyblockS
+import net.guneyilmaz0.skyblocks.SkyBlockS
 import net.guneyilmaz0.skyblocks.island.Island
 import net.guneyilmaz0.skyblocks.island.IslandManager
 
@@ -26,7 +26,7 @@ class PlayerListener : Listener {
         val session = Session.get(event.player)
         session.close()
         if (session.getIsland() != null) {
-            Server.getInstance().scheduler.scheduleDelayedTask(SkyblockS.instance, object : NukkitRunnable() {
+            Server.getInstance().scheduler.scheduleDelayedTask(SkyBlockS.instance, object : NukkitRunnable() {
                 override fun run() {
                     val level = Server.getInstance().getLevelByName(session.islandId) ?: return
                     if (Island.get(session.islandId!!).getOnlineMembers().isNotEmpty()) return

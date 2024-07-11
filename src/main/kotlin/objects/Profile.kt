@@ -2,7 +2,7 @@ package net.guneyilmaz0.skyblocks.objects
 
 import cn.nukkit.utils.Config
 import com.google.gson.Gson
-import net.guneyilmaz0.skyblocks.SkyblockS
+import net.guneyilmaz0.skyblocks.SkyBlockS
 import java.util.*
 
 data class Profile(
@@ -13,7 +13,7 @@ data class Profile(
 ) {
     companion object {
         fun getProfile(name: String): Profile? {
-            val configFilePath = "${SkyblockS.instance.dataFolder.path}/profiles.json"
+            val configFilePath = "${SkyBlockS.instance.dataFolder.path}/profiles.json"
             val config = Config(configFilePath, 1)
 
             val lowerCaseName = name.lowercase()
@@ -23,12 +23,12 @@ data class Profile(
         }
 
         fun isProfileExists(name: String): Boolean =
-            Config("${SkyblockS.instance.dataFolder.path}/profiles.json", 1).exists(name.lowercase())
+            Config("${SkyBlockS.instance.dataFolder.path}/profiles.json", 1).exists(name.lowercase())
 
     }
 
     fun save() {
-        val configFilePath = "${SkyblockS.instance.dataFolder.path}/profiles.json"
+        val configFilePath = "${SkyBlockS.instance.dataFolder.path}/profiles.json"
         val config = Config(configFilePath, 1)
         config.set(nickName.lowercase(), this)
         config.save()

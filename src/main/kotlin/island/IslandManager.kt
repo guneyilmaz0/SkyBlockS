@@ -6,7 +6,7 @@ import cn.nukkit.level.Sound
 import cn.nukkit.math.Vector3
 import cn.nukkit.scheduler.AsyncTask
 import net.guneyilmaz0.skyblocks.Session
-import net.guneyilmaz0.skyblocks.SkyblockS
+import net.guneyilmaz0.skyblocks.SkyBlockS
 import net.guneyilmaz0.skyblocks.objects.IslandData
 import net.guneyilmaz0.skyblocks.objects.Profile
 import net.guneyilmaz0.skyblocks.utils.Translator
@@ -21,7 +21,7 @@ object IslandManager {
         val data = IslandData.createDefault(player, id, type)
         IslandData.saveIsland(data)
 
-        Server.getInstance().scheduler.scheduleAsyncTask(SkyblockS.instance, object : AsyncTask() {
+        Server.getInstance().scheduler.scheduleAsyncTask(SkyBlockS.instance, object : AsyncTask() {
             override fun onRun() {
                 Server.getInstance().generateLevel(id, 0, IslandGenerator::class.java)
                 completeCreateIsland(player, id)

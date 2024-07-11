@@ -7,9 +7,9 @@ import net.guneyilmaz0.skyblocks.island.IslandGenerator
 import net.guneyilmaz0.skyblocks.listeners.*
 import net.guneyilmaz0.skyblocks.tasks.AutoSaveTask
 
-class SkyblockS : PluginBase() {
+class SkyBlockS : PluginBase() {
     companion object {
-        lateinit var instance: SkyblockS
+        lateinit var instance: SkyBlockS
     }
 
     override fun onLoad() {
