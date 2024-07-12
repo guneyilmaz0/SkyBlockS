@@ -11,7 +11,7 @@ import cn.nukkit.nbt.tag.CompoundTag
 
 class DesertIslandGenerator(private val options: MutableMap<String, Any>) : Generator() {
 
-    override fun getId(): Int = 4
+    override fun getId(): Int = 5
 
     private lateinit var level: ChunkManager
     private lateinit var random: NukkitRandom

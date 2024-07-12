@@ -21,7 +21,7 @@ class SkyBlockS : PluginBase() {
         instance = this
         //Register generator
         Generator.addGenerator(DefaultIslandGenerator::class.java, "default_island", 4)
-        Generator.addGenerator(DesertIslandGenerator::class.java, "desert_island", 4)
+        Generator.addGenerator(DesertIslandGenerator::class.java, "desert_island", 5)
         //Register listeners
         server.pluginManager.registerEvents(PlayerListener(), this)
         server.pluginManager.registerEvents(ProtectionListener(), this)

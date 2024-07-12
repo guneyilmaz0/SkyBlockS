@@ -64,19 +64,7 @@ class IslandCommand : Command(
 
             "visit" -> visitIsland(sender, args)
             "language" -> setLanguage(sender, args)
-            "help" -> {
-                sender.sendMessage("/island create <type> - §eCreate an island")
-                sender.sendMessage("/island delete - §eDelete your island")
-                sender.sendMessage("/island invite <player> - §eInvite a player to your island")
-                sender.sendMessage("/island accept - §eAccept an island invite")
-                sender.sendMessage("/island kick <player> - §eKick a player from your island")
-                sender.sendMessage("/island leave - §eLeave your island")
-                sender.sendMessage("/island spawn - §eSet your island spawn point")
-                sender.sendMessage("/island lock - §eLock your island")
-                sender.sendMessage("/island unlock - §eUnlock your island")
-                sender.sendMessage("/island visit <player> - §eVisit a player's island")
-                sender.sendMessage("/island language <lang> - §eChange your language")
-            }
+            "help" -> sender.sendMessage(Translator.translate(sender, "island_help"))
 
             else -> sender.sendMessage(usage)
         }
@@ -91,13 +79,12 @@ class IslandCommand : Command(
         }
 
         if (args.size < 2) {
-            player.sendMessage("§cUsage: /island create <type>")
-            player.sendMessage("§gTypes: normal, snow, desert, end")
+            player.sendMessage(Translator.translate(player, "island_type_required"))
             return
         }
 
         val type = args[1].lowercase()
-        if (type !in arrayOf("normal", "snow", "desert", "end")) {
+        if (type !in arrayOf("normal", "desert")) {
             player.sendMessage(Translator.translate(player, "invalid_island_type"))
             return
         }
@@ -131,7 +118,7 @@ class IslandCommand : Command(
         }
 
         if (args.size < 2) {
-            player.sendMessage("§cUsage: /island invite <player>")
+            player.sendMessage(Translator.translate(player, "island_invite_usage"))
             return
         }
 
@@ -157,7 +144,7 @@ class IslandCommand : Command(
         }
 
         if (args.size < 2) {
-            player.sendMessage("§cUsage: /island remove <player>")
+            player.sendMessage(Translator.translate(player, "island_remove_usage"))
             return
         }
 
@@ -191,7 +178,7 @@ class IslandCommand : Command(
         val island = getIsland(player) ?: return
 
         if (args.size < 2) {
-            player.sendMessage("§cUsage: /island kick <player>")
+            player.sendMessage(Translator.translate(player, "island_kick_usage"))
             return
         }
 
@@ -242,7 +229,7 @@ class IslandCommand : Command(
 
     private fun visitIsland(player: Player, args: Array<String>) {
         if (args.size < 2) {
-            player.sendMessage("§cUsage: /island visit <player>")
+            player.sendMessage(Translator.translate(player, "island_visit_usage"))
             return
         }
 
@@ -267,7 +254,7 @@ class IslandCommand : Command(
 
     private fun setLanguage(player: Player, args: Array<String>) {
         if (args.size < 2) {
-            player.sendMessage("§cUsage: /island language <lang>")
+            player.sendMessage(Translator.translate(player, "island_lang_usage"))
             return
         }
 
