@@ -5,6 +5,7 @@ import cn.nukkit.command.Command
 import cn.nukkit.command.CommandSender
 import cn.nukkit.form.window.FormWindowModal
 import net.guneyilmaz0.skyblocks.Session
+import net.guneyilmaz0.skyblocks.SkyBlockS
 import net.guneyilmaz0.skyblocks.island.Island
 import net.guneyilmaz0.skyblocks.island.IslandManager
 import net.guneyilmaz0.skyblocks.objects.Profile
@@ -19,9 +20,11 @@ class IslandCommand : Command(
 
     init {
         this.commandParameters.clear()
+        permission = SkyBlockS.instance.config.getString("skyblocks.command.island")
     }
 
     override fun execute(sender: CommandSender, string: String, args: Array<String>?): Boolean {
+        if (!testPermission(sender)) return false
         if (sender !is Player) {
             sender.sendMessage("You must be a player to use this command.")
             return false
