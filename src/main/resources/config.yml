@@ -1,2 +1,3 @@
 island_permission: "skyblocks.command.island"
 look_island_permission: "skyblocks.command.look_island"
+touch_island_permission: "skyblocks.touch_island"
