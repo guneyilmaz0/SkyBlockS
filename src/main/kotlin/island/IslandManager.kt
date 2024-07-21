@@ -19,17 +19,16 @@ object IslandManager {
 
     fun createIsland(player: Player, type: String) {
         val id = Utils.createIslandId()
-        val data = IslandData.createDefault(player, id, type)
-        IslandData.saveIsland(data)
-
-        val generator = when (type) {
-            "desert" -> DesertIslandGenerator::class.java
-            else -> DefaultIslandGenerator::class.java
-        }
+        IslandData.saveIsland(IslandData.createDefault(player, id, type))
 
         Server.getInstance().scheduler.scheduleAsyncTask(SkyBlockS.instance, object : AsyncTask() {
             override fun onRun() {
-                Server.getInstance().generateLevel(id, 0, generator)
+                Server.getInstance().generateLevel(
+                    id, 0, when (type) {
+                        "desert" -> DesertIslandGenerator::class.java
+                        else -> DefaultIslandGenerator::class.java
+                    }
+                )
                 completeCreateIsland(player, id)
             }
         })
@@ -96,6 +95,7 @@ object IslandManager {
             val profile = Profile.getProfile(member)
             profile?.islandId = null
         }
+
         val id = island.id
         island.delete()
         Server.getInstance().unloadLevel(Server.getInstance().getLevelByName(id))
