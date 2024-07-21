@@ -1,6 +1,12 @@
 # SkyBlockS
 SkyBlockS plugin not finished
 
+> [!WARNING]  
+> You must have a KotlinForNukkit plugin.
+> You can download it [here](https://cloudburstmc.org/resources/kotlinfornukkit.982/)
+
+
+
 ---
 TODO
 - [x] Add multilanguage system
