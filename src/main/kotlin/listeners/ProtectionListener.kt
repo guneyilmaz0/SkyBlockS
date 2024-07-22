@@ -27,6 +27,6 @@ class ProtectionListener : Listener {
         if (!event.isCancelled && !player.isOp && IslandData.isIslandExists(player.level.folderName))
             event.isCancelled = !Island.get(player.level.folderName)
                 .isMember(player.name) &&
-                    !player.hasPermission(SkyBlockS.instance.config.getString("touch_island_permission"))
+                    !player.hasPermission(SkyBlockS.instance.config.getString("touch_island_permission", "skyblocks.touch_island"))
     }
 }

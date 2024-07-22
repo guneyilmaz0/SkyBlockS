@@ -28,7 +28,7 @@ class SkyBlockS : PluginBase() {
         //Register commands
         server.commandMap.register("island", IslandCommand())
         //Register tasks
-        server.scheduler.scheduleRepeatingTask(this, AutoSaveTask(), 20 * 60)
+        server.scheduler.scheduleRepeatingTask(this, AutoSaveTask(), config.getInt("auto_save_interval", 1200))
     }
 
     override fun onDisable() {

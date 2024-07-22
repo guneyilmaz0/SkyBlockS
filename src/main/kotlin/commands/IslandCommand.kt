@@ -20,7 +20,7 @@ class IslandCommand : Command(
 
     init {
         this.commandParameters.clear()
-        permission = SkyBlockS.instance.config.getString("skyblocks.command.island")
+        permission = SkyBlockS.instance.config.getString("island_permission","skyblocks.command.island")
     }
 
     override fun execute(sender: CommandSender, string: String, args: Array<String>?): Boolean {
