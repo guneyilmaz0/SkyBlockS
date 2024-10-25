@@ -7,17 +7,21 @@ import net.guneyilmaz0.skyblocks.SkyBlockS
 import java.io.File
 
 object Translator {
-    fun translate(player: Player, string: String): String {
-        val lang = Session.get(player).profile.selectedLang
-        val config = Config("${SkyBlockS.instance.dataFolder.path}/lang/$lang.yml", 2)
-        return config.getString(string) ?: string
+
+    private val configCache = mutableMapOf<String, Config>()
+
+    private fun getConfigForLang(lang: String): Config {
+        return configCache.getOrPut(lang) {
+            Config("${SkyBlockS.instance.dataFolder.path}/lang/$lang.yml", 2)
+        }
     }
 
-    fun translate(player: Player, string: String, vararg strings: String): String {
+    fun translate(player: Player, key: String, vararg replacements: String): String {
         val lang = Session.get(player).profile.selectedLang
-        val config = Config("${SkyBlockS.instance.dataFolder.path}/lang/$lang.yml", 2)
-        val msg = config.getString(string) ?: return string
-        return strings.foldIndexed(msg) { index, acc, value ->
+        val config = getConfigForLang(lang)
+        val message = config.getString(key) ?: return key
+
+        return replacements.foldIndexed(message) { index, acc, value ->
             acc.replace("%var$index%", value)
         }
     }
@@ -26,5 +30,6 @@ object Translator {
         File("${SkyBlockS.instance.dataFolder.path}/lang/$lang.yml").exists()
 
     fun getSupportedLanguages(): List<String> =
-        File("${SkyBlockS.instance.dataFolder.path}/lang").listFiles()!!.map { it.nameWithoutExtension }
+        File("${SkyBlockS.instance.dataFolder.path}/lang")
+            .listFiles()?.map { it.nameWithoutExtension } ?: emptyList()
 }
