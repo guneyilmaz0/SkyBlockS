@@ -4,29 +4,30 @@ import cn.nukkit.Player
 import cn.nukkit.Server
 import net.guneyilmaz0.skyblocks.island.Island
 import net.guneyilmaz0.skyblocks.objects.Profile
-import java.util.*
+import java.util.WeakHashMap
 
 data class Session(val player: Player) {
 
     companion object {
-        private val data: WeakHashMap<Player, Session> = WeakHashMap()
+        private val data = WeakHashMap<Player, Session>()
 
         fun get(player: Player): Session = data.computeIfAbsent(player) { Session(it) }
     }
 
-    var profile: Profile
-    var islandId: String? = null
+    var profile: Profile = loadProfile()
+    var islandId: String? = profile.islandId?.also { loadIslandIfNotLoaded(it) }
 
-    init {
-        if (Profile.isProfileExists(player.name)) profile = Profile.getProfile(player.name)!!
-        else {
-            profile = Profile(player.uniqueId, player.name, null)
-            save()
+    private fun loadProfile(): Profile {
+        return if (Profile.isProfileExists(player.name)) {
+            Profile.getProfile(player.name)!!
+        } else {
+            Profile(player.uniqueId, player.name, null).also { it.save() }
         }
+    }
 
-        profile.islandId?.let {
-            islandId = it
-            if (!Server.getInstance().isLevelLoaded(islandId)) Server.getInstance().loadLevel(islandId)
+    private fun loadIslandIfNotLoaded(islandId: String) {
+        if (!Server.getInstance().isLevelLoaded(islandId)) {
+            Server.getInstance().loadLevel(islandId)
         }
     }
 
@@ -34,7 +35,7 @@ data class Session(val player: Player) {
 
     fun save() {
         profile.save()
-        if (islandId != null) getIsland()!!.save()
+        getIsland()?.save()
     }
 
     fun close() {
