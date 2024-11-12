@@ -26,4 +26,4 @@ TODO
 - [x] Add visit island
 - [x] Select language
 - [ ] Add more languages
-- [ ] Look players island
+- [x] Look players island

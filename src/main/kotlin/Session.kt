@@ -18,17 +18,13 @@ data class Session(val player: Player) {
     var islandId: String? = profile.islandId?.also { loadIslandIfNotLoaded(it) }
 
     private fun loadProfile(): Profile {
-        return if (Profile.isProfileExists(player.name)) {
-            Profile.getProfile(player.name)!!
-        } else {
-            Profile(player.uniqueId, player.name, null).also { it.save() }
-        }
+        return if (Profile.isProfileExists(player.name)) Profile.getProfile(player.name)!!
+        else Profile(player.uniqueId, player.name, null).also { it.save() }
+
     }
 
     private fun loadIslandIfNotLoaded(islandId: String) {
-        if (!Server.getInstance().isLevelLoaded(islandId)) {
-            Server.getInstance().loadLevel(islandId)
-        }
+        if (!Server.getInstance().isLevelLoaded(islandId)) Server.getInstance().loadLevel(islandId)
     }
 
     fun getIsland(): Island? = islandId?.let { Island.get(it) }

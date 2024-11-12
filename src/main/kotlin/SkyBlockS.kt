@@ -3,6 +3,7 @@ package net.guneyilmaz0.skyblocks
 import cn.nukkit.level.generator.Generator
 import cn.nukkit.plugin.PluginBase
 import net.guneyilmaz0.skyblocks.commands.IslandCommand
+import net.guneyilmaz0.skyblocks.commands.LookPlayersIslandCommand
 import net.guneyilmaz0.skyblocks.island.generators.*
 import net.guneyilmaz0.skyblocks.listeners.*
 import net.guneyilmaz0.skyblocks.tasks.AutoSaveTask
@@ -27,6 +28,7 @@ class SkyBlockS : PluginBase() {
         server.pluginManager.registerEvents(ProtectionListener(), this)
         //Register commands
         server.commandMap.register("island", IslandCommand())
+        server.commandMap.register("look_island", LookPlayersIslandCommand())
         //Register tasks
         server.scheduler.scheduleRepeatingTask(this, AutoSaveTask(), config.getInt("auto_save_interval", 1200))
     }
