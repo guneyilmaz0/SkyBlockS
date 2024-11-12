@@ -24,11 +24,12 @@ class IslandCommand : Command(
     }
 
     override fun execute(sender: CommandSender, string: String, args: Array<String>?): Boolean {
-        if (!testPermission(sender)) return false
         if (sender !is Player) {
             sender.sendMessage("You must be a player to use this command.")
             return false
         }
+
+        if (!testPermission(sender)) return false
 
         if (args.isNullOrEmpty()) {
             sender.sendMessage(usage)
