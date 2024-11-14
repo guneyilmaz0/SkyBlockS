@@ -20,16 +20,28 @@ class SkyBlockS : PluginBase() {
 
     override fun onEnable() {
         instance = this
-        //Register generator
+        registerGenerators()
+        registerListeners()
+        registerCommands()
+        registerTasks()
+    }
+
+    private fun registerGenerators() {
         Generator.addGenerator(DefaultIslandGenerator::class.java, "default_island", 4)
         Generator.addGenerator(DesertIslandGenerator::class.java, "desert_island", 5)
-        //Register listeners
+    }
+
+    private fun registerListeners() {
         server.pluginManager.registerEvents(PlayerListener(), this)
         server.pluginManager.registerEvents(ProtectionListener(), this)
-        //Register commands
+    }
+
+    private fun registerCommands() {
         server.commandMap.register("island", IslandCommand())
         server.commandMap.register("look_island", LookPlayersIslandCommand())
-        //Register tasks
+    }
+
+    private fun registerTasks() {
         server.scheduler.scheduleRepeatingTask(this, AutoSaveTask(), config.getInt("auto_save_interval", 1200))
     }
 

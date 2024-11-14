@@ -20,7 +20,6 @@ data class Session(val player: Player) {
     private fun loadProfile(): Profile {
         return if (Profile.isProfileExists(player.name)) Profile.getProfile(player.name)!!
         else Profile(player.uniqueId, player.name, null).also { it.save() }
-
     }
 
     private fun loadIslandIfNotLoaded(islandId: String) {
