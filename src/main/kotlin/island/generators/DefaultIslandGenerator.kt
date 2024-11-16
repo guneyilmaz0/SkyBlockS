@@ -1,6 +1,5 @@
 package net.guneyilmaz0.skyblocks.island.generators
 
-import cn.nukkit.block.Block
 import cn.nukkit.blockentity.BlockEntityChest
 import cn.nukkit.level.generator.`object`.tree.ObjectTree
 import cn.nukkit.nbt.tag.CompoundTag
@@ -16,9 +15,9 @@ class DefaultIslandGenerator(options: MutableMap<String, Any>) : IslandGenerator
         if (chunkX % 20 == 0 && chunkZ % 20 == 0) {
             for (x in 6..11) {
                 for (z in 6..11) {
-                    chunk.setBlock(x, 61, z, Block.DIRT)
-                    chunk.setBlock(x, 62, z, Block.DIRT)
-                    chunk.setBlock(x, 63, z, Block.GRASS)
+                    chunk.setBlock(x, 61, z, DIRT)
+                    chunk.setBlock(x, 62, z, DIRT)
+                    chunk.setBlock(x, 63, z, GRASS)
                 }
             }
 
@@ -31,7 +30,7 @@ class DefaultIslandGenerator(options: MutableMap<String, Any>) : IslandGenerator
             }
 
             ObjectTree.growTree(level, 10, 64, 7, random, 0)
-            chunk.setBlock(9, 64, 7, Block.CHEST)
+            chunk.setBlock(9, 64, 7, CHEST)
             BlockEntityChest.createBlockEntity(BlockEntityChest.CHEST, chunk, CompoundTag()) as BlockEntityChest
         }
     }

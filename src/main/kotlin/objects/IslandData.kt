@@ -10,12 +10,12 @@ data class IslandData(
     val id: String,
     var owner: String,
     var type: String,
-    var members: List<String>,
+    var members: List<String> = mutableListOf(),
     var lock: Boolean = false
 ) {
     companion object {
         fun createDefault(player: Player, id: String, type: String): IslandData =
-            IslandData(id, player.name, type, ArrayList())
+            IslandData(id, player.name, type)
 
         fun getIslandData(name: String): IslandData? {
             val configFilePath = "${SkyBlockS.instance.dataFolder.path}/islands.json"

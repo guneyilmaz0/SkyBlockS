@@ -25,16 +25,15 @@ class PlayerListener : Listener {
     fun onQuit(event: PlayerQuitEvent) {
         val session = Session.get(event.player)
         session.close()
-        if (session.getIsland() != null) {
-            Server.getInstance().scheduler.scheduleDelayedTask(SkyBlockS.instance, object : NukkitRunnable() {
-                override fun run() {
-                    val level = Server.getInstance().getLevelByName(session.islandId) ?: return
-                    if (Island.get(session.islandId!!).getOnlineMembers().isNotEmpty()) return
-                    Server.getInstance().unloadLevel(level)
-                    session.getIsland()!!.close()
-                }
-            }, 20 * 10)
-        }
+        if (session.getIsland() == null) return
+        Server.getInstance().scheduler.scheduleDelayedTask(SkyBlockS.instance, object : NukkitRunnable() {
+            override fun run() {
+                val level = Server.getInstance().getLevelByName(session.islandId) ?: return
+                if (Island.get(session.islandId!!).getOnlineMembers().isNotEmpty()) return
+                Server.getInstance().unloadLevel(level)
+                session.getIsland()!!.close()
+            }
+        }, 20 * 10)
     }
 
     @EventHandler

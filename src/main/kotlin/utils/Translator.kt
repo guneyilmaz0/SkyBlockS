@@ -10,11 +10,8 @@ object Translator {
 
     private val configCache = mutableMapOf<String, Config>()
 
-    private fun getConfigForLang(lang: String): Config {
-        return configCache.getOrPut(lang) {
-            Config("${SkyBlockS.instance.dataFolder.path}/lang/$lang.yml", 2)
-        }
-    }
+    private fun getConfigForLang(lang: String): Config =
+        configCache.getOrPut(lang) { Config("${SkyBlockS.instance.dataFolder.path}/lang/$lang.yml", 2) }
 
     fun translate(player: Player, key: String, vararg replacements: String): String {
         val lang = Session.get(player).profile.selectedLang
