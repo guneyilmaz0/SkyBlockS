@@ -1,4 +1,5 @@
 name: SkyBlockS
 main: net.guneyilmaz0.skyblocks.SkyBlockS
-api: [1.0.14]
+api: 1.0.0
 version: 1.0
+author: guneyilmaz0

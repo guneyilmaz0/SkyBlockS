@@ -6,24 +6,33 @@ import net.guneyilmaz0.skyblocks.commands.IslandCommand
 import net.guneyilmaz0.skyblocks.commands.LookPlayersIslandCommand
 import net.guneyilmaz0.skyblocks.island.generators.*
 import net.guneyilmaz0.skyblocks.listeners.*
+import net.guneyilmaz0.skyblocks.provider.*
 import net.guneyilmaz0.skyblocks.tasks.AutoSaveTask
 
 class SkyBlockS : PluginBase() {
     companion object {
         lateinit var instance: SkyBlockS
+        lateinit var provider: Provider
     }
 
     override fun onLoad() {
         saveResource("lang/en.yml")
         saveResource("lang/tr.yml")
+        saveDefaultConfig()
+        instance = this
+        provider = when (config.getString("provider", "json")) {
+            "mysql" -> MySQLProvider(this)
+            "mongo" -> MongoProvider(this)
+            else -> JSONProvider(this)
+        }
     }
 
     override fun onEnable() {
-        instance = this
         registerGenerators()
         registerListeners()
         registerCommands()
         registerTasks()
+        sendPrefix()
     }
 
     private fun registerGenerators() {
@@ -47,5 +56,23 @@ class SkyBlockS : PluginBase() {
 
     override fun onDisable() {
         for (player in server.onlinePlayers.values) Session.get(player).close()
+    }
+
+    private fun sendPrefix() {
+        logger.info("""
+        
+        
+         ░▒▓███████▓▒░ 
+        ░▒▓█▓▒░        
+        ░▒▓█▓▒░        
+         ░▒▓██████▓▒░  
+               ░▒▓█▓▒░ 
+               ░▒▓█▓▒░ 
+        ░▒▓███████▓▒░  
+                          
+        §aSkyBlockS §rv${description.version} §ahas been enabled.
+        §aSelected provider: §r${provider::class.simpleName}
+        """.trimIndent()
+        )
     }
 }

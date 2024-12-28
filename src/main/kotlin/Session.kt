@@ -18,8 +18,8 @@ data class Session(val player: Player) {
     var islandId: String? = profile.islandId?.also { loadIslandIfNotLoaded(it) }
 
     private fun loadProfile(): Profile {
-        return if (Profile.isProfileExists(player.name)) Profile.getProfile(player.name)!!
-        else Profile(player.uniqueId, player.name, null).also { it.save() }
+        return if (SkyBlockS.provider.isProfileExists(player.name)) SkyBlockS.provider.getProfile(player.name)!!
+        else Profile(player.uniqueId, player.name, null).also { SkyBlockS.provider.saveProfile(it) }
     }
 
     private fun loadIslandIfNotLoaded(islandId: String) {
@@ -29,7 +29,7 @@ data class Session(val player: Player) {
     fun getIsland(): Island? = islandId?.let { Island.get(it) }
 
     fun save() {
-        profile.save()
+        SkyBlockS.provider.saveProfile(profile)
         getIsland()?.save()
     }
 

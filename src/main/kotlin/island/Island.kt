@@ -3,6 +3,7 @@ package net.guneyilmaz0.skyblocks.island
 import cn.nukkit.Player
 import cn.nukkit.Server
 import cn.nukkit.level.Sound
+import net.guneyilmaz0.skyblocks.SkyBlockS
 import net.guneyilmaz0.skyblocks.objects.IslandData
 import net.guneyilmaz0.skyblocks.utils.Translator
 import java.util.*
@@ -15,7 +16,7 @@ data class Island(val id: String) {
         fun get(id: String): Island = data.computeIfAbsent(id) { Island(it) }
     }
 
-    var database: IslandData = IslandData.getIslandData(id)!!
+    var database: IslandData = SkyBlockS.provider.getIsland(id)!!
 
     fun teleportPlayer(player: Player) {
         player.teleport(Server.getInstance().getLevelByName(id).spawnLocation)
@@ -52,10 +53,10 @@ data class Island(val id: String) {
         data.remove(id)
     }
 
-    fun save() = IslandData.saveIsland(database)
+    fun save() = SkyBlockS.provider.saveIsland(database)
 
     fun delete() {
         data.remove(id)
-        IslandData.removeIsland(id)
+        SkyBlockS.provider.removeIsland(database)
     }
 }
