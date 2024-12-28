@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "net.guneyilmaz0.skyblocks"
-version = "0.1.3"
+version = "0.1.4"
 
 repositories {
     mavenCentral()
@@ -17,6 +17,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.0")
     implementation("com.github.guneyilmaz0:MongoS:5.0.0-beta.3")
     compileOnly("org.mongodb:bson:5.2.0")
+    implementation("org.xerial:sqlite-jdbc:3.34.0")
     implementation("com.mysql:mysql-connector-j:9.1.0")
     compileOnly ("cn.nukkit:nukkit:1.0-SNAPSHOT")
 }

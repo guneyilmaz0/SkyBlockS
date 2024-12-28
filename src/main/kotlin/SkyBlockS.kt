@@ -24,6 +24,7 @@ class SkyBlockS : PluginBase() {
         provider = when (config.getString("provider", "json")) {
             "mysql" -> MySQLProvider(this)
             "mongo" -> MongoProvider(this)
+            "sqlite" -> SQLiteProvider(this)
             else -> JSONProvider(this)
         }
     }
