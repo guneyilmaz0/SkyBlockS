@@ -8,10 +8,13 @@ import net.guneyilmaz0.skyblocks.objects.Profile
 
 class JSONProvider(plugin: SkyBlockS) : Provider(plugin) {
 
-    private val profiles = Config("${SkyBlockS.instance.dataFolder.path}/profiles.json", 1)
-    private val islands = Config("${SkyBlockS.instance.dataFolder.path}/islands.json", 1)
+    private lateinit var profiles: Config
+    private lateinit var islands: Config
 
-    override fun initialize() {}
+    override fun initialize() {
+        profiles = Config("${SkyBlockS.instance.dataFolder.path}/profiles.json", 1)
+        islands = Config("${SkyBlockS.instance.dataFolder.path}/islands.json", 1)
+    }
 
     override fun getProfile(name: String): Profile? =
         if (profiles.exists(name.lowercase())) Gson().fromJson(

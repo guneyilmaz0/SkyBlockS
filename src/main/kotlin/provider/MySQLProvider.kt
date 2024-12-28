@@ -12,6 +12,12 @@ class MySQLProvider(plugin: SkyBlockS) : Provider(plugin) {
     private lateinit var connection: Connection
 
     override fun initialize() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver")
+        } catch (ex: ClassNotFoundException) {
+            throw RuntimeException("Error while trying to load MySql driver", ex)
+        }
+
         connection = DriverManager.getConnection(
             plugin.config.getString("mysql.url"),
             plugin.config.getString("mysql.user"),
@@ -21,8 +27,8 @@ class MySQLProvider(plugin: SkyBlockS) : Provider(plugin) {
         connection.createStatement().use { statement->
             statement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS profiles (" +
-                        "uuid VARCHAR(36) PRIMARY KEY," +
-                        "nickName VARCHAR(16) NOT NULL," +
+                        "nickName VARCHAR(16) PRIMARY KEY,"+
+                        "uuid VARCHAR(36) NOT NULL," +
                         "islandId VARCHAR(36) NULL," +
                         "selectedLang VARCHAR(4) NOT NULL" +
                         ")"
@@ -34,7 +40,7 @@ class MySQLProvider(plugin: SkyBlockS) : Provider(plugin) {
                         "owner VARCHAR(36) NOT NULL," +
                         "type VARCHAR(16) NOT NULL," +
                         "members TEXT NULL," +
-                        "locked BOOLEAN NOT NULL," +
+                        "locked BOOLEAN NOT NULL" +
                         ")"
             )
         }

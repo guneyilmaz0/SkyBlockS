@@ -2,3 +2,15 @@ island_permission: "skyblocks.command.island"
 look_island_permission: "skyblocks.command.look_island"
 touch_island_permission: "skyblocks.touch_island"
 auto_save_internal: 1200 # 20 * 60 = 1200 = 60 seconds
+
+# Available providers: json, mongo, mysql
+provider: "json"
+
+mongo.uri: "mongodb://localhost:27017/"
+mongo.database: "database"
+
+mysql:
+  url: "jdbc:mysql://localhost:3306/database"
+  user: "root"
+  password: "password"
+
