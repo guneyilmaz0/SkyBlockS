@@ -7,17 +7,17 @@ version = "0.0.1-alpha"
 
 repositories {
     mavenCentral()
-    maven {
-        url = uri("https://repo.opencollab.dev/maven-releases")
-    }
-    maven {
-        url = uri("https://repo.opencollab.dev/maven-snapshots")
-    }
+    maven("https://repo.opencollab.dev/maven-releases")
+    maven("https://repo.opencollab.dev/maven-snapshots")
+    maven("https://jitpack.io")
 }
 
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.23")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+    implementation("com.github.guneyilmaz0:MongoS:5.0.0-beta.3")
+    implementation("org.mongodb:bson:5.2.0")
+    implementation("com.mysql:mysql-connector-j:9.1.0")
     compileOnly ("cn.nukkit:nukkit:1.0-SNAPSHOT")
 }
 

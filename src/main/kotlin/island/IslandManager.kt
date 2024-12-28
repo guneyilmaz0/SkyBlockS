@@ -9,7 +9,6 @@ import net.guneyilmaz0.skyblocks.Session
 import net.guneyilmaz0.skyblocks.SkyBlockS
 import net.guneyilmaz0.skyblocks.island.generators.*
 import net.guneyilmaz0.skyblocks.objects.IslandData
-import net.guneyilmaz0.skyblocks.objects.Profile
 import net.guneyilmaz0.skyblocks.utils.Translator
 import net.guneyilmaz0.skyblocks.utils.Utils
 
@@ -19,7 +18,7 @@ object IslandManager {
 
     fun createIsland(player: Player, type: String) {
         val id = Utils.createIslandId()
-        IslandData.saveIsland(IslandData.createDefault(player, id, type))
+        SkyBlockS.provider.saveIsland(IslandData(id, player.name, type))
 
         Server.getInstance().scheduler.scheduleAsyncTask(SkyBlockS.instance, object : AsyncTask() {
             override fun onRun() {
@@ -92,7 +91,7 @@ object IslandManager {
         }
 
         for (member in island.database.members) {
-            val profile = Profile.getProfile(member)
+            val profile = SkyBlockS.provider.getProfile(member)
             profile?.islandId = null
         }
 

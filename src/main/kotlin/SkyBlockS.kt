@@ -6,16 +6,20 @@ import net.guneyilmaz0.skyblocks.commands.IslandCommand
 import net.guneyilmaz0.skyblocks.commands.LookPlayersIslandCommand
 import net.guneyilmaz0.skyblocks.island.generators.*
 import net.guneyilmaz0.skyblocks.listeners.*
+import net.guneyilmaz0.skyblocks.provider.MongoProvider
+import net.guneyilmaz0.skyblocks.provider.Provider
 import net.guneyilmaz0.skyblocks.tasks.AutoSaveTask
 
 class SkyBlockS : PluginBase() {
     companion object {
         lateinit var instance: SkyBlockS
+        lateinit var provider: Provider
     }
 
     override fun onLoad() {
         saveResource("lang/en.yml")
         saveResource("lang/tr.yml")
+        provider = MongoProvider(this)
     }
 
     override fun onEnable() {

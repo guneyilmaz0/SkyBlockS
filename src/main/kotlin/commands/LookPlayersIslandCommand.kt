@@ -5,7 +5,6 @@ import cn.nukkit.command.Command
 import cn.nukkit.command.CommandSender
 import net.guneyilmaz0.skyblocks.SkyBlockS
 import net.guneyilmaz0.skyblocks.island.Island
-import net.guneyilmaz0.skyblocks.objects.Profile
 import net.guneyilmaz0.skyblocks.utils.Translator
 
 class LookPlayersIslandCommand : Command(
@@ -33,7 +32,7 @@ class LookPlayersIslandCommand : Command(
         }
 
         val player = args[0]
-        val profile = Profile.getProfile(player) ?: run {
+        val profile = SkyBlockS.provider.getProfile(player) ?: run {
             sender.sendMessage(Translator.translate(sender, "look_island_player_not_found"))
             return false
         }

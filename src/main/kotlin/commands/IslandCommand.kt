@@ -8,7 +8,6 @@ import net.guneyilmaz0.skyblocks.Session
 import net.guneyilmaz0.skyblocks.SkyBlockS
 import net.guneyilmaz0.skyblocks.island.Island
 import net.guneyilmaz0.skyblocks.island.IslandManager
-import net.guneyilmaz0.skyblocks.objects.Profile
 import net.guneyilmaz0.skyblocks.utils.Translator
 
 class IslandCommand : Command(
@@ -164,9 +163,9 @@ class IslandCommand : Command(
 
         val target = player.server.getPlayer(args[1])
         if (target == null) {
-            val profile = Profile.getProfile(args[1])
+            val profile = SkyBlockS.provider.getProfile(args[1])
             profile!!.islandId = null
-            profile.save()
+            SkyBlockS.provider.saveProfile(profile)
         } else {
             val targetSession = Session.get(target)
             targetSession.islandId = null
