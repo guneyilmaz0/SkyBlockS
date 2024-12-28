@@ -1,6 +1,6 @@
 # SkyBlockS
 
-## Latest version: 0.1.2
+## Latest version: 0.1.3
 
 ### Description
 SkyBlockS is a plugin for Nukkit that allows you to create your own skyblock server.

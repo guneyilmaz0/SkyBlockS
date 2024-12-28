@@ -8,6 +8,7 @@ import net.guneyilmaz0.skyblocks.island.generators.*
 import net.guneyilmaz0.skyblocks.listeners.*
 import net.guneyilmaz0.skyblocks.provider.*
 import net.guneyilmaz0.skyblocks.tasks.AutoSaveTask
+import net.guneyilmaz0.skyblocks.tasks.CheckUpdateTask
 
 class SkyBlockS : PluginBase() {
     companion object {
@@ -32,6 +33,7 @@ class SkyBlockS : PluginBase() {
         registerListeners()
         registerCommands()
         registerTasks()
+        server.scheduler.scheduleAsyncTask(this, CheckUpdateTask())
         sendPrefix()
     }
 
