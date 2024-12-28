@@ -16,9 +16,8 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.23")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.0")
     implementation("com.github.guneyilmaz0:MongoS:5.0.0-beta.3")
-    implementation("org.mongodb:bson:5.2.0")
+    compileOnly("org.mongodb:bson:5.2.0")
     implementation("com.mysql:mysql-connector-j:9.1.0")
-    implementation("org.mariadb.jdbc:mariadb-java-client:3.3.1")
     compileOnly ("cn.nukkit:nukkit:1.0-SNAPSHOT")
 }
 
