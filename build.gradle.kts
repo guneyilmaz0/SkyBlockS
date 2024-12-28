@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "net.guneyilmaz0.skyblocks"
-version = "0.0.1-alpha"
+version = "0.1.2"
 
 repositories {
     mavenCentral()
