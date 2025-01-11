@@ -7,7 +7,6 @@ import cn.nukkit.event.Listener
 import cn.nukkit.event.block.BlockBreakEvent
 import cn.nukkit.event.block.BlockEvent
 import cn.nukkit.event.block.BlockPlaceEvent
-import cn.nukkit.level.Level
 import cn.nukkit.level.Sound
 import cn.nukkit.level.particle.HappyVillagerParticle
 import cn.nukkit.scheduler.NukkitRunnable
@@ -15,6 +14,7 @@ import net.guneyilmaz0.skyblocks.SkyBlockS
 import net.guneyilmaz0.skyblocks.island.Island
 import net.guneyilmaz0.skyblocks.utils.Translator.translate
 
+@Suppress("unused")
 class IsLevelListener : Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
