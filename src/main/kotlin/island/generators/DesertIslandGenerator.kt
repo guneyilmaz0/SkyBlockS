@@ -4,6 +4,7 @@ import cn.nukkit.block.Block
 import cn.nukkit.block.BlockID
 import cn.nukkit.blockentity.BlockEntityChest
 import cn.nukkit.nbt.tag.CompoundTag
+import net.guneyilmaz0.skyblocks.utils.Utils
 
 class DesertIslandGenerator(options: MutableMap<String, Any>) : IslandGeneratorBase(options) {
 
@@ -33,8 +34,13 @@ class DesertIslandGenerator(options: MutableMap<String, Any>) : IslandGeneratorB
             chunk.setBlock(10, 64, 7, BlockID.CACTUS)
             chunk.setBlock(10, 65, 7, BlockID.CACTUS)
             chunk.setBlock(10, 66, 7, BlockID.CACTUS)
-            chunk.setBlock(9, 63, 7, Block.CHEST)
-            BlockEntityChest.createBlockEntity(BlockEntityChest.CHEST, chunk, CompoundTag()) as BlockEntityChest
         }
+    }
+
+    override fun populateChunk(x: Int, z: Int) {
+        val chunk = level.getChunk(x, z)
+        chunk.setBlock(9, 63, 7, CHEST)
+        val entity = chunk.getTile(9, 64, 7) as BlockEntityChest
+        entity.inventory.contents = Utils.getChestContents()
     }
 }
