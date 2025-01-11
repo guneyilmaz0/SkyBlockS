@@ -28,7 +28,7 @@ class IsLevelListener : Listener {
         if (!SkyBlockS.provider.isIslandExists(event.block.level.folderName)) return
 
         val level = event.block.level
-        val island = Island.get(level.folderName) ?: return
+        val island = Island.get(level.folderName)
 
         Server.getInstance().scheduler.scheduleDelayedTask(SkyBlockS.instance, object : NukkitRunnable() {
             override fun run() {
