@@ -3,6 +3,7 @@ package net.guneyilmaz0.skyblocks.island.generators
 import cn.nukkit.blockentity.BlockEntityChest
 import cn.nukkit.level.generator.`object`.tree.ObjectTree
 import cn.nukkit.nbt.tag.CompoundTag
+import net.guneyilmaz0.skyblocks.utils.Utils
 
 class DefaultIslandGenerator(options: MutableMap<String, Any>) : IslandGeneratorBase(options) {
 
@@ -30,8 +31,20 @@ class DefaultIslandGenerator(options: MutableMap<String, Any>) : IslandGenerator
             }
 
             ObjectTree.growTree(level, 10, 64, 7, random, 0)
+
             chunk.setBlock(9, 64, 7, CHEST)
-            BlockEntityChest.createBlockEntity(BlockEntityChest.CHEST, chunk, CompoundTag()) as BlockEntityChest
+
+            val chestPosition = CompoundTag()
+                .putString("id", "Chest")
+                .putInt("x",  9)
+                .putInt("y", 64)
+                .putInt("z",  7)
+
+            BlockEntityChest.createBlockEntity("Chest", chunk, chestPosition).also {
+                (it as? BlockEntityChest)?.inventory?.contents = Utils.getChestContents()
+            }
+
         }
     }
+
 }

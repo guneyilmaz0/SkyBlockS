@@ -36,7 +36,9 @@ class SQLiteProvider(plugin: SkyBlockS) : Provider(plugin) {
                         "owner TEXT NOT NULL," +
                         "type TEXT NOT NULL," +
                         "members TEXT," +
-                        "locked INTEGER NOT NULL" +
+                        "locked INTEGER NOT NULL," +
+                        "isLevel INTEGER NOT NULL," +
+                        "xp INTEGER NOT NULL" +
                         ")"
             )
         }
@@ -91,7 +93,8 @@ class SQLiteProvider(plugin: SkyBlockS) : Provider(plugin) {
                     resultSet.getString("owner"),
                     resultSet.getString("type"),
                     resultSet.getString("members")?.split(",") ?: emptyList(),
-                    resultSet.getInt("locked") != 0
+                    resultSet.getInt("locked") != 0,
+                    IslandData.Level(resultSet.getInt("isLevel"), resultSet.getInt("xp"))
                 )
             }
         }
@@ -108,14 +111,16 @@ class SQLiteProvider(plugin: SkyBlockS) : Provider(plugin) {
 
     override fun saveIsland(island: IslandData) {
         connection.prepareStatement(
-            "INSERT INTO islands (id, owner, type, members, locked) VALUES (?, ?, ?, ?, ?) " +
-                    "ON CONFLICT(id) DO UPDATE SET owner = excluded.owner, type = excluded.type, members = excluded.members, locked = excluded.locked"
+            "INSERT INTO islands (id, owner, type, members, locked, isLevel, xp) VALUES (?, ?, ?, ?, ?, ?, ?) " +
+                    "ON CONFLICT(id) DO UPDATE SET owner = excluded.owner, type = excluded.type, members = excluded.members, locked = excluded.locked, isLevel = excluded.isLevel, xp = excluded.xp"
         ).use { statement ->
             statement.setString(1, island.id)
             statement.setString(2, island.owner)
             statement.setString(3, island.type)
             statement.setString(4, island.members.joinToString(","))
             statement.setInt(5, if (island.lock) 1 else 0)
+            statement.setInt(6, island.level.level)
+            statement.setInt(7, island.level.xp)
             statement.executeUpdate()
         }
     }

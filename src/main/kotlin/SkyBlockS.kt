@@ -44,6 +44,7 @@ class SkyBlockS : PluginBase() {
     }
 
     private fun registerListeners() {
+        server.pluginManager.registerEvents(IsLevelListener(), this)
         server.pluginManager.registerEvents(PlayerListener(), this)
         server.pluginManager.registerEvents(ProtectionListener(), this)
     }
