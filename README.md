@@ -15,11 +15,9 @@ SkyBlockS is a plugin for Nukkit that allows you to create your own skyblock ser
 ---
 TODO
 - [x] Add multilanguage system
-- [ ] Add remaining islands types
 - [x] Add member remove
-- [ ] Add chest contents
+- [X] Add chest contents
 - [x] Lock/Unlock island
 - [x] Add visit island
 - [x] Select language
-- [ ] Add more languages
 - [x] Look players island
