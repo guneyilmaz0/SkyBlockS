@@ -2,6 +2,7 @@ package net.guneyilmaz0.skyblocks.utils
 
 import cn.nukkit.Server
 import cn.nukkit.item.Item
+import net.guneyilmaz0.skyblocks.SkyBlockS
 import java.io.File
 import java.time.Instant
 
@@ -25,10 +26,14 @@ object Utils {
 
     fun getChestContents() : Map<Int, Item> {
         val map = mutableMapOf<Int, Item>()
-        // Test items
-        map[0] = Item.get(Item.DIAMOND, 0, 1)
-        map[1] = Item.get(Item.GOLD_INGOT, 0, 1)
-        map[2] = Item.get(Item.IRON_INGOT, 0, 1)
+        val list = SkyBlockS.instance.config.getStringList("chest_contents")
+        for (i in list.indices) {
+            val split = list[i].split(":")
+            val id = split[0].toInt()
+            val meta = split[1].toInt()
+            val count = split[2].toInt()
+            map[i] = Item.get(id, meta, count)
+        }
         return map
     }
 }

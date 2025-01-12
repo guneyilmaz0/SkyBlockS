@@ -16,7 +16,7 @@ class IsLevelListener : Listener {
     fun onBlockBreak(event: BlockBreakEvent) {
         if (event.isCancelled) return
         if (!SkyBlockS.provider.isIslandExists(event.block.level.folderName)) return
-        Server.getInstance().scheduler.scheduleAsyncTask(SkyBlockS.instance, IslandXPTask(event.block.level, 1))
+        Server.getInstance().scheduler.scheduleAsyncTask(SkyBlockS.instance, IslandXPTask(event.block.level, -1))
     }
 
     @EventHandler(priority = EventPriority.NORMAL)

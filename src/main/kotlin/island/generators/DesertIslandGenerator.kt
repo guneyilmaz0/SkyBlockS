@@ -34,13 +34,18 @@ class DesertIslandGenerator(options: MutableMap<String, Any>) : IslandGeneratorB
             chunk.setBlock(10, 64, 7, BlockID.CACTUS)
             chunk.setBlock(10, 65, 7, BlockID.CACTUS)
             chunk.setBlock(10, 66, 7, BlockID.CACTUS)
-        }
-    }
 
-    override fun populateChunk(x: Int, z: Int) {
-        val chunk = level.getChunk(x, z)
-        chunk.setBlock(9, 63, 7, CHEST)
-        val entity = chunk.getTile(9, 64, 7) as BlockEntityChest
-        entity.inventory.contents = Utils.getChestContents()
+            chunk.setBlock(9, 63, 7, CHEST)
+
+            val chestPosition = CompoundTag()
+                .putString("id", "Chest")
+                .putInt("x",  9)
+                .putInt("y", 63)
+                .putInt("z",  7)
+
+            BlockEntityChest.createBlockEntity("Chest", chunk, chestPosition).also {
+                (it as? BlockEntityChest)?.inventory?.contents = Utils.getChestContents()
+            }
+        }
     }
 }

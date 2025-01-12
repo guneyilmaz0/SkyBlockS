@@ -32,13 +32,19 @@ class DefaultIslandGenerator(options: MutableMap<String, Any>) : IslandGenerator
 
             ObjectTree.growTree(level, 10, 64, 7, random, 0)
 
+            chunk.setBlock(9, 64, 7, CHEST)
+
+            val chestPosition = CompoundTag()
+                .putString("id", "Chest")
+                .putInt("x",  9)
+                .putInt("y", 64)
+                .putInt("z",  7)
+
+            BlockEntityChest.createBlockEntity("Chest", chunk, chestPosition).also {
+                (it as? BlockEntityChest)?.inventory?.contents = Utils.getChestContents()
+            }
+
         }
     }
 
-    override fun populateChunk(x: Int, z: Int) {
-        val chunk = level.getChunk(x, z)
-        chunk.setBlock(9, 64, 7, CHEST)
-        val entity = chunk.getTile(9, 64, 7) as BlockEntityChest
-        entity.inventory.contents = Utils.getChestContents()
-    }
 }

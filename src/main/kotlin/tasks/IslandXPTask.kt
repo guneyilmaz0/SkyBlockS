@@ -12,7 +12,8 @@ class IslandXPTask(private val level: Level, private val amount: Int) : AsyncTas
         val result = island.database.level.increaseXp(amount)
         val messageKey = when (result) {
             1 -> "island.level.up"
-            else -> "island.level.down"
+            -1 -> "island.level.down"
+            else -> ""
         }
         if (result != 0) island.getOnlineMembers().forEach {
             it.sendMessage(translate(it, messageKey, island.database.level.level.toString()))
