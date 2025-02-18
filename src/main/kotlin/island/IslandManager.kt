@@ -2,7 +2,6 @@ package net.guneyilmaz0.skyblocks.island
 
 import cn.nukkit.Player
 import cn.nukkit.Server
-import cn.nukkit.level.Level
 import cn.nukkit.level.Sound
 import cn.nukkit.math.Vector3
 import cn.nukkit.scheduler.AsyncTask
@@ -40,7 +39,7 @@ object IslandManager {
         val session = Session.get(player)
         session.islandId = id
         session.profile.islandId = id
-        player.teleport(Vector3(7.0, 66.0, 7.0))
+        player.teleport(level.spawnLocation)
         player.sendMessage(Translator.translate(player, "island_created"))
         level.addSound(player, Sound.RANDOM_LEVELUP, 1f, 1f, player)
     }
