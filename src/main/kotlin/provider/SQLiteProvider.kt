@@ -38,6 +38,7 @@ class SQLiteProvider(plugin: SkyBlockS) : Provider(plugin) {
                         "members TEXT," +
                         "locked INTEGER NOT NULL," +
                         "isLevel INTEGER NOT NULL," +
+                        "totalXp INTEGER NOT NULL" +
                         "xp INTEGER NOT NULL" +
                         ")"
             )
@@ -94,7 +95,7 @@ class SQLiteProvider(plugin: SkyBlockS) : Provider(plugin) {
                     resultSet.getString("type"),
                     resultSet.getString("members")?.split(",") ?: emptyList(),
                     resultSet.getInt("locked") != 0,
-                    IslandData.Level(resultSet.getInt("isLevel"), resultSet.getInt("xp"))
+                    IslandData.Level(resultSet.getInt("isLevel"), resultSet.getInt("totalXp"), resultSet.getInt("xp"))
                 )
             }
         }

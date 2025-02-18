@@ -1,6 +1,8 @@
 package net.guneyilmaz0.skyblocks.objects
 
 import net.guneyilmaz0.mongos.MongoSObject
+import net.guneyilmaz0.skyblocks.events.IslandExperienceChangedEvent
+import net.guneyilmaz0.skyblocks.island.Island
 
 data class IslandData(
     val id: String,
@@ -8,29 +10,36 @@ data class IslandData(
     var type: String,
     var members: List<String> = mutableListOf(),
     var lock: Boolean = false,
-    var level: Level = Level()
+    var level: Level = Level(1, 1, 0)
 ) : MongoSObject() {
 
     data class Level(
-        var level: Int = 1,
-        var xp: Int = 1
+        var level: Int,
+        var totalXp: Int,
+        var xp: Int
     ) {
-        fun calculateNextLevelXp(): Int = (50 * level) * level
+        fun getRequiredXp(): Int = (50 * level) * level
 
-        fun increaseXp(amount: Int): Int {
+        fun changeXp(amount: Int, island: Island) {
+            val oldLevel = level
+
             xp += amount
-            if (xp <= 0) {
-                level--
-                xp = calculateNextLevelXp() - 1
-                return -1
+            totalXp += amount
 
-            }
-            if (xp >= calculateNextLevelXp()) {
+            while (xp >= getRequiredXp()) {
+                xp -= getRequiredXp()
                 level++
-                xp = 0
-                return 1
             }
-            return 0
+
+            while (xp < 0 && level > 1) {
+                level--
+                xp += getRequiredXp()
+            }
+
+            if (level == 1 && xp < 0) xp = 0
+
+            val event = IslandExperienceChangedEvent(island, oldLevel, level, xp)
+            event.call()
         }
     }
 
