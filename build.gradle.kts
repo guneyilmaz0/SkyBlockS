@@ -1,9 +1,9 @@
 plugins {
-    kotlin("jvm") version "1.9.23"
+    kotlin("jvm") version "2.1.10"
 }
 
 group = "net.guneyilmaz0.skyblocks"
-version = "0.1.4"
+version = "1.0.1"
 
 repositories {
     mavenCentral()
@@ -15,8 +15,7 @@ repositories {
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.23")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.0")
-    implementation("com.github.guneyilmaz0:MongoS:5.0.0-beta.3")
-    compileOnly("org.mongodb:bson:5.2.0")
+    implementation("com.github.guneyilmaz0:MongoS:5.0.1")
     implementation("org.xerial:sqlite-jdbc:3.34.0")
     implementation("com.mysql:mysql-connector-j:9.1.0")
     compileOnly ("cn.nukkit:nukkit:1.0-SNAPSHOT")
