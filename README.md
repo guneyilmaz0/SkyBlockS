@@ -11,6 +11,8 @@ SkyBlockS is a plugin for Nukkit that allows you to create your own skyblock ser
 > If you find a bug, please report it.
 > If you want to help me with the development of this plugin, you can do it by creating a pull request.
 
+> [!IMPORTANT]
+> In PNX you need to copy worlds from resources to the worlds folder.
 ---
 Commands
 ---

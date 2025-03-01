@@ -86,13 +86,18 @@ class IslandCommand : Command(
             return
         }
 
-        val type = args[1].lowercase()
-        if (type !in arrayOf("normal", "desert")) {
+        val type = args[1].lowercase().getType() ?: run {
             player.sendMessage(Translator.translate(player, "invalid_island_type"))
             return
         }
 
         IslandManager.createIsland(player, type)
+    }
+
+    private fun String.getType(): String? = when (this) {
+        "normal" -> "IslandNormal"
+        "desert" -> "IslandDesert"
+        else -> null
     }
 
     private fun deleteIsland(player: Player) {

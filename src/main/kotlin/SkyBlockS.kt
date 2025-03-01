@@ -1,7 +1,7 @@
 package net.guneyilmaz0.skyblocks
 
-import cn.nukkit.level.generator.Generator
 import cn.nukkit.plugin.PluginBase
+import cn.nukkit.registry.Registries
 import net.guneyilmaz0.skyblocks.commands.IslandCommand
 import net.guneyilmaz0.skyblocks.commands.LookPlayersIslandCommand
 import net.guneyilmaz0.skyblocks.island.generators.*
@@ -39,8 +39,8 @@ class SkyBlockS : PluginBase() {
     }
 
     private fun registerGenerators() {
-        Generator.addGenerator(DefaultIslandGenerator::class.java, "default_island", 4)
-        Generator.addGenerator(DesertIslandGenerator::class.java, "desert_island", 5)
+        Registries.GENERATE_STAGE.register(EmptyGenerateStage.NAME, EmptyGenerateStage::class.java)
+        Registries.GENERATOR.register(EmptyGenerator.NAME, EmptyGenerator::class.java)
     }
 
     private fun registerListeners() {

@@ -7,7 +7,6 @@ import cn.nukkit.math.Vector3
 import cn.nukkit.scheduler.AsyncTask
 import net.guneyilmaz0.skyblocks.Session
 import net.guneyilmaz0.skyblocks.SkyBlockS
-import net.guneyilmaz0.skyblocks.island.generators.*
 import net.guneyilmaz0.skyblocks.objects.IslandData
 import net.guneyilmaz0.skyblocks.utils.Translator
 import net.guneyilmaz0.skyblocks.utils.Utils
@@ -22,12 +21,8 @@ object IslandManager {
 
         Server.getInstance().scheduler.scheduleAsyncTask(SkyBlockS.instance, object : AsyncTask() {
             override fun onRun() {
-                Server.getInstance().generateLevel(
-                    id, 0, when (type) {
-                        "desert" -> DesertIslandGenerator::class.java
-                        else -> DefaultIslandGenerator::class.java
-                    }
-                )
+                Utils.copyLevel(type, id)
+                Server.getInstance().loadLevel(id)
                 completeCreateIsland(player, id)
             }
         })
@@ -35,7 +30,7 @@ object IslandManager {
 
     private fun completeCreateIsland(player: Player, id: String) {
         val level = Server.getInstance().getLevelByName(id)
-        level.setSpawnLocation(Vector3(7.0, 66.0, 7.0))
+        level.setSpawnLocation(Vector3(-3.0, 66.0, 0.0))
         val session = Session.get(player)
         session.islandId = id
         session.profile.islandId = id

@@ -14,14 +14,3 @@ mysql:
   user: "root"
   password: "password"
 
-# ID:damage:count
-chest_contents:
-  - "81:0:3"
-  - "295:0:3"
-  - "361:0:3"
-  - "362:0:3"
-  - "458:0:3"
-  - "79:0:2"
-  - "325:10:1"
-  - "297:0:16"
-
