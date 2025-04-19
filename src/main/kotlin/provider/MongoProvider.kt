@@ -13,13 +13,13 @@ class MongoProvider(plugin: SkyBlockS) : Provider(plugin) {
         database = MongoS(plugin.config.getString("mongo.uri"), plugin.config.getString("mongo.database"))
     }
 
-    override fun getProfile(name: String): Profile = database.getObject("profiles", name, Profile::class.java)
+    override fun getProfile(name: String): Profile? = database.get<Profile>("profiles", name)
 
     override fun isProfileExists(name: String): Boolean = database.exists("profiles", name)
 
     override fun saveProfile(profile: Profile) = database.set("profiles", profile.nickName, profile)
 
-    override fun getIsland(id: String): IslandData = database.getObject("islands", id, IslandData::class.java)
+    override fun getIsland(id: String): IslandData? = database.get<IslandData>("islands", id)
 
     override fun isIslandExists(id: String): Boolean = database.exists("islands", id)
 

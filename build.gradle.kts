@@ -1,9 +1,13 @@
 plugins {
-    kotlin("jvm") version "2.1.10"
+    kotlin("jvm") version "2.0.21"
 }
 
 group = "net.guneyilmaz0.skyblocks"
 version = "1.0.1"
+
+kotlin {
+    jvmToolchain(21)
+}
 
 repositories {
     mavenCentral()
@@ -13,16 +17,10 @@ repositories {
 }
 
 dependencies {
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.23")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.0")
-    implementation("com.github.guneyilmaz0:MongoS:5.0.1")
+    implementation("com.github.guneyilmaz0:MongoS:1.1.1")
     implementation("org.xerial:sqlite-jdbc:3.34.0")
     implementation("com.mysql:mysql-connector-j:9.1.0")
-    compileOnly ("cn.nukkit:nukkit:1.0-SNAPSHOT")
-}
-
-tasks.test {
-    useJUnitPlatform()
+    compileOnly("cn.nukkit:nukkit:1.0-SNAPSHOT")
 }
 
 tasks.withType<Jar> {
@@ -35,8 +33,4 @@ tasks.withType<Jar> {
     from({
         configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
     })
-}
-
-kotlin {
-    jvmToolchain(21)
 }
