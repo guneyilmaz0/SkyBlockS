@@ -1,6 +1,6 @@
 package net.guneyilmaz0.skyblocks.provider
 
-import net.guneyilmaz0.mongos.MongoS
+import net.guneyilmaz0.mongos4k.MongoS
 import net.guneyilmaz0.skyblocks.SkyBlockS
 import net.guneyilmaz0.skyblocks.objects.IslandData
 import net.guneyilmaz0.skyblocks.objects.Profile
@@ -26,6 +26,6 @@ class MongoProvider(plugin: SkyBlockS) : Provider(plugin) {
     override fun saveIsland(island: IslandData) = database.set("islands", island.id, island)
 
     override fun removeIsland(island: IslandData) {
-        database.removeData("islands", island.id)
+        database.remove("islands", island.id)
     }
 }

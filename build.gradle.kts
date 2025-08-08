@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.guneyilmaz0:MongoS:1.1.1")
+    implementation("com.github.guneyilmaz0:MongoS:1.2.6")
     implementation("org.xerial:sqlite-jdbc:3.34.0")
     implementation("com.mysql:mysql-connector-j:9.1.0")
     compileOnly("cn.nukkit:nukkit:1.0-SNAPSHOT")

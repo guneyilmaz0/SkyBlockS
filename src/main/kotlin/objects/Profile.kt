@@ -1,6 +1,6 @@
 package net.guneyilmaz0.skyblocks.objects
 
-import net.guneyilmaz0.mongos.MongoSObject
+import net.guneyilmaz0.mongos4k.MongoSObject
 import java.util.*
 
 data class Profile(
@@ -8,6 +8,4 @@ data class Profile(
     var nickName: String,
     var islandId: String?,
     var selectedLang: String = "en"
-) : MongoSObject() {
-    override fun toString(): String = super.toString()
-}
+) : MongoSObject()

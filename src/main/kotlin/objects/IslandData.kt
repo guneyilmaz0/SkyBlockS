@@ -1,6 +1,6 @@
 package net.guneyilmaz0.skyblocks.objects
 
-import net.guneyilmaz0.mongos.MongoSObject
+import net.guneyilmaz0.mongos4k.MongoSObject
 import net.guneyilmaz0.skyblocks.events.IslandExperienceChangedEvent
 import net.guneyilmaz0.skyblocks.island.Island
 
@@ -42,7 +42,4 @@ data class IslandData(
             event.call()
         }
     }
-
-    override fun toString(): String = super.toString()
-
 }
