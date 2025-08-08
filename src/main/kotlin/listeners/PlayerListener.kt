@@ -33,7 +33,7 @@ class PlayerListener : Listener {
                 Server.getInstance().unloadLevel(level)
                 session.getIsland()!!.close()
             }
-        }, 20 * 10)
+        }, 1)
     }
 
     @EventHandler

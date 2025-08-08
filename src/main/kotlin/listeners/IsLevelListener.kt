@@ -5,6 +5,7 @@ import cn.nukkit.event.EventPriority
 import cn.nukkit.event.Listener
 import cn.nukkit.event.block.BlockBreakEvent
 import cn.nukkit.event.block.BlockPlaceEvent
+import cn.nukkit.scheduler.NukkitRunnable
 import net.guneyilmaz0.skyblocks.Session
 import net.guneyilmaz0.skyblocks.SkyBlockS
 import net.guneyilmaz0.skyblocks.events.IslandExperienceChangedEvent
@@ -25,9 +26,15 @@ class IsLevelListener : Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     fun onBlockPlace(event: BlockPlaceEvent) {
         if (event.isCancelled) return
+        if (event.block.id == 0) return
         if (!SkyBlockS.provider.isIslandExists(event.block.level.folderName)) return
-        val island = Island.get(event.block.level.folderName)
-        island.database.level.changeXp(1, island)
+        object : NukkitRunnable() {
+            override fun run() {
+                val island = Island.get(event.block.level.folderName)
+                island.database.level.changeXp(1, island)
+            }
+        }.runTaskLaterAsynchronously(SkyBlockS.instance, 2)
+
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
