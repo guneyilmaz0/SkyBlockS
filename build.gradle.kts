@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "net.guneyilmaz0.skyblocks"
-version = "1.0.1"
+version = "1.1.1"
 
 kotlin {
     jvmToolchain(21)
