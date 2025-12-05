@@ -32,7 +32,7 @@ class DefaultIslandGenerator(options: MutableMap<String, Any>) : IslandGenerator
 
             ObjectTree.growTree(level, 10, 64, 7, random, 0)
 
-            chunk.setBlock(9, 64, 7, CHEST)
+            chunk.setBlock(9, 64, 7, CHEST, 4)
 
             val chestPosition = CompoundTag()
                 .putString("id", "Chest")
