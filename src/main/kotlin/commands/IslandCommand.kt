@@ -68,6 +68,7 @@ class IslandCommand : Command(
             "visit" -> visitIsland(sender, args)
             "language" -> setLanguage(sender, args)
             "help" -> sender.sendMessage(Translator.translate(sender, "island_help"))
+            "info", "information" -> sendInformation(sender)
 
             else -> sender.sendMessage(usage)
         }
@@ -195,7 +196,7 @@ class IslandCommand : Command(
             return
         }
 
-        if (!target.getLevel().folderName.equals(island.id)) {
+        if (!target.level.folderName.equals(island.id)) {
             player.sendMessage(Translator.translate(player, "player_not_on_island"))
             return
         }
@@ -272,5 +273,19 @@ class IslandCommand : Command(
         val profile = Session.get(player).profile
         profile.selectedLang = lang
         player.sendMessage(Translator.translate(player, "language_changed", lang))
+    }
+
+    private fun sendInformation(player: Player) {
+        val island = getIsland(player) ?: return
+
+        val isLocked = if (island.database.lock) Translator.translate(player, "island_information_locked")
+        else Translator.translate(player, "island_information_unlocked")
+
+        val members = if (island.database.members.isEmpty()) Translator.translate(player, "island_information_noMembers")
+         else island.database.members.joinToString(", ")
+
+        val requiredXP = (island.database.level.getRequiredXp() - island.database.level.xp).toString()
+
+        player.sendMessage(Translator.translate(player, "island_information", island.database.owner, members, island.database.type.replaceFirstChar { it.uppercase() }, isLocked, island.database.level.level.toString(), requiredXP, island.database.level.totalXp.toString()))
     }
 }

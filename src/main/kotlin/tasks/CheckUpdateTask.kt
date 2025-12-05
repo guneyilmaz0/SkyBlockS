@@ -27,7 +27,7 @@ class CheckUpdateTask : AsyncTask() {
                 val endIndex = response.indexOf("\"", startIndex)
                 latestVersion = response.substring(startIndex, endIndex)
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             latestVersion = null
         }
     }
@@ -38,8 +38,8 @@ class CheckUpdateTask : AsyncTask() {
             return
         }
 
-        if (SkyBlockS.instance.description.version != latestVersion)
+        if (SkyBlockS.instance.description.version != latestVersion) {
             server.logger.info("§eThere is a new update available for SkyBlockS! Version: $latestVersion")
-        else server.logger.info("§aYou are using the latest version of the SkyBlockS!")
+        }
     }
 }

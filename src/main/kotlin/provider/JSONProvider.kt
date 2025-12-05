@@ -11,14 +11,16 @@ class JSONProvider(plugin: SkyBlockS) : Provider(plugin) {
     private lateinit var profiles: Config
     private lateinit var islands: Config
 
+    private val gson = Gson()
+
     override fun initialize() {
-        profiles = Config("${SkyBlockS.instance.dataFolder.path}/profiles.json", 1)
-        islands = Config("${SkyBlockS.instance.dataFolder.path}/islands.json", 1)
+        profiles = Config("${plugin.dataFolder.path}/profiles.json", Config.JSON)
+        islands = Config("${plugin.dataFolder.path}/islands.json", Config.JSON)
     }
 
     override fun getProfile(name: String): Profile? =
-        if (profiles.exists(name.lowercase())) Gson().fromJson(
-            profiles.getString(name.lowercase()),
+        if (profiles.exists(name.lowercase())) gson.fromJson(
+            gson.toJsonTree(profiles.get(name.lowercase())),
             Profile::class.java
         )
         else null
@@ -31,8 +33,8 @@ class JSONProvider(plugin: SkyBlockS) : Provider(plugin) {
     }
 
     override fun getIsland(id: String): IslandData? =
-        if (islands.exists(id)) Gson().fromJson(
-            islands.getString(id),
+        if (islands.exists(id)) gson.fromJson(
+            gson.toJsonTree(islands.get(id)),
             IslandData::class.java
         )
         else null

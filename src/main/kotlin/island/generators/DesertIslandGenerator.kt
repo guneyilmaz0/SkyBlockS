@@ -1,7 +1,5 @@
 package net.guneyilmaz0.skyblocks.island.generators
 
-import cn.nukkit.block.Block
-import cn.nukkit.block.BlockID
 import cn.nukkit.blockentity.BlockEntityChest
 import cn.nukkit.nbt.tag.CompoundTag
 import net.guneyilmaz0.skyblocks.utils.Utils
@@ -17,9 +15,9 @@ class DesertIslandGenerator(options: MutableMap<String, Any>) : IslandGeneratorB
         if (chunkX % 20 == 0 && chunkZ % 20 == 0) {
             for (x in 6..11) {
                 for (z in 6..11) {
-                    chunk.setBlock(x, 61, z, Block.SANDSTONE)
-                    chunk.setBlock(x, 62, z, Block.SAND)
-                    chunk.setBlock(x, 63, z, Block.SAND)
+                    chunk.setBlock(x, 61, z, SANDSTONE)
+                    chunk.setBlock(x, 62, z, SAND)
+                    chunk.setBlock(x, 63, z, SAND)
                 }
             }
 
@@ -31,11 +29,11 @@ class DesertIslandGenerator(options: MutableMap<String, Any>) : IslandGeneratorB
                 }
             }
 
-            chunk.setBlock(10, 64, 7, BlockID.CACTUS)
-            chunk.setBlock(10, 65, 7, BlockID.CACTUS)
-            chunk.setBlock(10, 66, 7, BlockID.CACTUS)
+            chunk.setBlock(10, 64, 7, CACTUS)
+            chunk.setBlock(10, 65, 7, CACTUS)
+            chunk.setBlock(10, 66, 7, CACTUS)
 
-            chunk.setBlock(9, 63, 7, CHEST)
+            chunk.setBlock(9, 63, 7, CHEST, 4)
 
             val chestPosition = CompoundTag()
                 .putString("id", "Chest")
