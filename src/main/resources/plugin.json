@@ -1,0 +1,9 @@
+{
+  "entrance": "net.guneyilmaz0.skyblocks.SkyBlockS",
+  "name": "SkyBlockS",
+  "authors": [
+    "guneyilmaz0"
+  ],
+  "version": "1.0-allay",
+  "dependencies": []
+}
